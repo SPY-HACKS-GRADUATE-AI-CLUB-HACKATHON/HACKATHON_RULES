@@ -1,6 +1,8 @@
+
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
+import { cn } from "@/lib/utils";
 
 const INITIAL_LINES = [
   "> INITIALIZING HANDSHAKE PROTOCOL...",
@@ -30,6 +32,7 @@ interface HackerSimProps {
 
 export const HackerSim = ({ isExiting }: HackerSimProps) => {
   const [lines, setLines] = useState<string[]>([]);
+  const [isFadingOut, setIsFadingOut] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Handle Initial Sequence
@@ -57,6 +60,8 @@ export const HackerSim = ({ isExiting }: HackerSimProps) => {
           exitIdx++;
         } else {
           clearInterval(interval);
+          // Start fading out the terminal text after the last exit line
+          setTimeout(() => setIsFadingOut(true), 500);
         }
       }, 300);
       return () => clearInterval(interval);
@@ -72,7 +77,10 @@ export const HackerSim = ({ isExiting }: HackerSimProps) => {
   return (
     <div 
       ref={containerRef}
-      className="h-full w-full bg-black p-8 font-code text-primary overflow-hidden transition-opacity duration-1000"
+      className={cn(
+        "h-full w-full bg-black p-8 font-code text-primary overflow-hidden transition-all duration-[1500ms] ease-in-out",
+        isFadingOut ? "opacity-0 scale-105 blur-lg" : "opacity-100"
+      )}
     >
       <div className="max-w-4xl mx-auto space-y-1">
         {lines.map((line, i) => (

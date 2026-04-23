@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -23,10 +24,10 @@ export default function Home() {
   const handleContinue = () => {
     if (stage === "interact") {
       setStage("exiting_sim");
-      // Give the exit sequence 2 seconds to type out before switching to cinematic intro
+      // Give the exit sequence enough time to type out and fade before switching to cinematic intro
       setTimeout(() => {
         setStage("intro");
-      }, 2000);
+      }, 2500);
     }
   };
 
