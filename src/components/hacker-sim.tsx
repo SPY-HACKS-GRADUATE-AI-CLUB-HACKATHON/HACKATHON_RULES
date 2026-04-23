@@ -79,7 +79,7 @@ export const HackerSim = ({ isExiting }: HackerSimProps) => {
       ref={containerRef}
       className={cn(
         "h-full w-full bg-black p-8 font-code text-primary overflow-hidden transition-all duration-[1500ms] ease-in-out",
-        isFadingOut ? "opacity-0 scale-105 blur-lg" : "opacity-100"
+        isFadingOut ? "opacity-0 scale-105" : "opacity-100"
       )}
     >
       <div className="max-w-4xl mx-auto space-y-1">
