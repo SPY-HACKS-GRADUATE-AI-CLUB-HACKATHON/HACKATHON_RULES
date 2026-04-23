@@ -96,7 +96,7 @@ export const MainSite = () => {
                 <Shield className="w-16 h-16 text-primary" />
               </div>
               <h1 className="text-8xl md:text-[12rem] font-black tracking-tighter uppercase leading-[0.75] text-white">
-                CORE <br/> <span className="text-primary">ACTIVE</span>
+                SPY <br/> <span className="text-primary">HACKS</span>
               </h1>
               <p className="text-muted-foreground/80 text-2xl font-medium max-w-2xl leading-relaxed">
                 Welcome back, Agent. All sub-networks have been decrypted. Standby for operational objectives at <span className="text-white font-bold">SPY HACKS 2026</span>.
