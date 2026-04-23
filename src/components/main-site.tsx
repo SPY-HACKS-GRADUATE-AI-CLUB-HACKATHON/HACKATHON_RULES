@@ -70,7 +70,7 @@ export const MainSite = () => {
                   MISSION <br/> <span className="text-primary/40">LOCKED</span>
                 </h1>
                 <p className="text-muted-foreground/80 text-xl font-medium tracking-tight">
-                  Core protocols are currently encrypted. Provide valid credentials or register for the 2026 recruitment cycle to proceed.
+                  After registration, you will receive an access key which will give you all the mission briefings.
                 </p>
               </div>
               
