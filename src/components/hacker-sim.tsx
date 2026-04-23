@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 
-const HACKING_LINES = [
+const INITIAL_LINES = [
   "> INITIALIZING HANDSHAKE PROTOCOL...",
   "> TUNNEL ESTABLISHED VIA PORT 8080",
   "> DETECTING FIREWALL: IDS-ALPHA-9",
@@ -16,23 +16,52 @@ const HACKING_LINES = [
   "> AUTHORIZING AGENT ACCESS...",
 ];
 
-export const HackerSim = () => {
+const EXIT_LINES = [
+  "> VERIFICATION COMPLETE.",
+  "> DECRYPTION PROTOCOL SUCCESSFUL.",
+  "> REDIRECTING TO MISSION BRIEFING...",
+  "> DISCONNECTING SECURE TUNNEL...",
+  "> EXITING SHELL...",
+];
+
+interface HackerSimProps {
+  isExiting?: boolean;
+}
+
+export const HackerSim = ({ isExiting }: HackerSimProps) => {
   const [lines, setLines] = useState<string[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Handle Initial Sequence
   useEffect(() => {
     let currentLine = 0;
     const interval = setInterval(() => {
-      if (currentLine < HACKING_LINES.length) {
-        setLines((prev) => [...prev, HACKING_LINES[currentLine]]);
+      if (currentLine < INITIAL_LINES.length) {
+        setLines((prev) => [...prev, INITIAL_LINES[currentLine]]);
         currentLine++;
       } else {
         clearInterval(interval);
       }
-    }, 300);
+    }, 250);
 
     return () => clearInterval(interval);
   }, []);
+
+  // Handle Exit Sequence
+  useEffect(() => {
+    if (isExiting) {
+      let exitIdx = 0;
+      const interval = setInterval(() => {
+        if (exitIdx < EXIT_LINES.length) {
+          setLines((prev) => [...prev, EXIT_LINES[exitIdx]]);
+          exitIdx++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 300);
+      return () => clearInterval(interval);
+    }
+  }, [isExiting]);
 
   useEffect(() => {
     if (containerRef.current) {
@@ -43,7 +72,7 @@ export const HackerSim = () => {
   return (
     <div 
       ref={containerRef}
-      className="h-full w-full bg-black p-8 font-code text-primary overflow-hidden"
+      className="h-full w-full bg-black p-8 font-code text-primary overflow-hidden transition-opacity duration-1000"
     >
       <div className="max-w-4xl mx-auto space-y-1">
         {lines.map((line, i) => (
@@ -51,7 +80,7 @@ export const HackerSim = () => {
             <span className="opacity-50">[{new Date().toLocaleTimeString()}]</span> {line}
           </div>
         ))}
-        {lines.length === HACKING_LINES.length && (
+        {lines.length === INITIAL_LINES.length && !isExiting && (
           <div className="mt-8 animate-pulse text-accent font-bold tracking-[0.3em]">
             _ MISSION DATA LOADED
           </div>
