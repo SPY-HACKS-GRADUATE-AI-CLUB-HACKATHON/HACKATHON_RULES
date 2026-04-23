@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -27,13 +28,13 @@ export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
   ];
 
   useEffect(() => {
-    // 6000ms (6s) interval is 300% slower than the previous 2000ms (2s)
+    // 6000ms interval (300% slower than 2s)
     const timer = setInterval(() => {
       setStep((prev) => {
         if (prev >= statements.length - 1) {
           clearInterval(timer);
-          // Wait for the last fade out before completing (increased to match duration)
-          setTimeout(onComplete, 4000);
+          // Wait for the final fade-out to finish before completing
+          setTimeout(onComplete, 4500);
           return prev + 1;
         }
         return prev + 1;
@@ -44,14 +45,18 @@ export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
   }, [onComplete, statements.length]);
 
   return (
-    <div className="h-screen w-full bg-black flex items-center justify-center overflow-hidden px-4">
+    <div className="h-screen w-full bg-black flex items-center justify-center overflow-hidden px-4 relative">
       {statements.map((stmt, index) => (
         <div
           key={index}
-          className={`absolute flex flex-col items-center transition-all duration-[3000ms] ease-in-out ${
+          style={{ 
+            willChange: "opacity, transform, filter",
+            transitionDuration: "4000ms" 
+          }}
+          className={`absolute flex flex-col items-center transition-all ease-in-out ${
             step === index 
               ? "opacity-100 scale-100 blur-0" 
-              : "opacity-0 scale-90 blur-xl pointer-events-none"
+              : "opacity-0 scale-95 blur-2xl pointer-events-none"
           }`}
         >
           {stmt.isLogo && (
