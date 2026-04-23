@@ -27,17 +27,18 @@ export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
   ];
 
   useEffect(() => {
+    // 6000ms (6s) interval is 300% slower than the previous 2000ms (2s)
     const timer = setInterval(() => {
       setStep((prev) => {
         if (prev >= statements.length - 1) {
           clearInterval(timer);
-          // Wait for the last fade out before completing
-          setTimeout(onComplete, 2000);
-          return prev + 1; // Move past the last index to trigger fade out
+          // Wait for the last fade out before completing (increased to match duration)
+          setTimeout(onComplete, 4000);
+          return prev + 1;
         }
         return prev + 1;
       });
-    }, 2000); // 2 second interval as requested
+    }, 6000);
 
     return () => clearInterval(timer);
   }, [onComplete, statements.length]);
@@ -47,19 +48,19 @@ export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
       {statements.map((stmt, index) => (
         <div
           key={index}
-          className={`absolute flex flex-col items-center transition-all duration-1000 ease-in-out ${
+          className={`absolute flex flex-col items-center transition-all duration-[3000ms] ease-in-out ${
             step === index 
               ? "opacity-100 scale-100 blur-0" 
-              : "opacity-0 scale-95 blur-md pointer-events-none"
+              : "opacity-0 scale-90 blur-xl pointer-events-none"
           }`}
         >
           {stmt.isLogo && (
-            <ShieldCheck className="w-20 h-20 text-primary mb-8 animate-pulse" />
+            <ShieldCheck className="w-24 h-24 text-primary mb-8 animate-pulse" />
           )}
-          <h2 className="text-4xl md:text-6xl font-headline font-bold text-center mb-6 tracking-tighter">
+          <h2 className="text-4xl md:text-7xl font-headline font-bold text-center mb-8 tracking-tighter text-white">
             {stmt.text}
           </h2>
-          <p className="text-xl md:text-2xl text-muted-foreground font-body text-center max-w-lg">
+          <p className="text-xl md:text-3xl text-muted-foreground font-body text-center max-w-2xl">
             {stmt.subtext}
           </p>
         </div>
