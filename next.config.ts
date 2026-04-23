@@ -1,12 +1,8 @@
 import type { NextConfig } from 'next';
 
-// Check if we are running the build command (production) or the dev server (local)
-const isProd = process.env.NODE_ENV === 'production';
-
 const nextConfig: NextConfig = {
-  output: 'export',
-  // Only apply the basePath if it is a production build
-  basePath: isProd ? '/HACKATHON_RULES' : '', 
+  // DELETE: output: 'export'
+  // DELETE: basePath: ...
 
   typescript: {
     ignoreBuildErrors: true,
@@ -15,26 +11,12 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
+    // You can keep this or remove it, Vercel supports optimization
     unoptimized: true, 
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'placehold.co',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'picsum.photos',
-        port: '',
-        pathname: '/**',
-      },
+      { protocol: 'https', hostname: 'placehold.co' },
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'picsum.photos' },
     ],
   },
 };
