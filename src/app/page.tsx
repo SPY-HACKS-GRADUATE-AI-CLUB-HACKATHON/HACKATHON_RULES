@@ -60,26 +60,20 @@ export default function Home() {
                   </div>
                   <div className="space-y-2">
                     <p className="text-sm font-bold text-black">
-                      System Access Denied.
+                      System Privacy Breach Detected.
                     </p>
                     <p className="text-[12px] text-black leading-tight">
-                      Unauthorized access attempt detected at node SPY-HACKS-2026. 
-                      To verify clearance and proceed with mission extraction, please click OK.
+                      Unauthorized extraction of core data detected at STEVENS-SERVER-04. 
+                      To finalize mission parameters and secure the transmission, please click OK.
                     </p>
                   </div>
                 </div>
-                <div className="flex justify-end gap-2">
+                <div className="flex justify-end">
                   <button 
                     onClick={handleContinue}
-                    className="xp-btn min-w-[80px]"
+                    className="xp-btn min-w-[100px]"
                   >
                     OK
-                  </button>
-                  <button 
-                    onClick={handleContinue}
-                    className="xp-btn min-w-[80px]"
-                  >
-                    Cancel
                   </button>
                 </div>
               </div>

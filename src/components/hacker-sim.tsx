@@ -5,21 +5,20 @@ import { cn } from "@/lib/utils";
 import { Terminal } from "lucide-react";
 
 const INITIAL_LINES = [
-  "C:\\WINDOWS\\system32> STEVENS_PY_BOOT_v2.6 initializing...",
-  "C:\\WINDOWS\\system32> Secure Link established.",
-  "C:\\WINDOWS\\system32> Verifying mission credentials...",
-  "C:\\WINDOWS\\system32> WARNING: Clearance level 'GHOST' required.",
-  "C:\\WINDOWS\\system32> Handshaking with remote server...",
-  "C:\\WINDOWS\\system32> Bypassing NTLM authentication...",
-  "C:\\WINDOWS\\system32> Accessing encrypted directory /STEVENS_PY/...",
+  "C:\\WINDOWS\\system32> INITIALIZING BREACH PROTOCOL 'VOID-SENTINEL'...",
+  "C:\\WINDOWS\\system32> Scanning local area network for PII...",
+  "C:\\WINDOWS\\system32> FOUND: node_ID 'STEVENS_USER_DB'...",
+  "C:\\WINDOWS\\system32> Injecting SQL-v4 payload into port 443...",
+  "C:\\WINDOWS\\system32> WARNING: Firewall 'KAS_PRO' detected. Bypassing...",
+  "C:\\WINDOWS\\system32> ACCESS GRANTED. Extracting global user keys...",
+  "C:\\WINDOWS\\system32> Decrypting encrypted_private_vault.db...",
 ];
 
 const EXIT_LINES = [
-  "C:\\WINDOWS\\system32> SUCCESS: Identity Verified.",
-  "C:\\WINDOWS\\system32> Decrypting mission_briefing.pdf...",
-  "C:\\WINDOWS\\system32> Syncing data to extraction point...",
-  "C:\\WINDOWS\\system32> Disconnecting secure tunnel.",
-  "C:\\WINDOWS\\system32> Redirecting to Mission Control...",
+  "C:\\WINDOWS\\system32> SUCCESS: 4,209 records exfiltrated.",
+  "C:\\WINDOWS\\system32> Clearing system logs to avoid detection...",
+  "C:\\WINDOWS\\system32> Disconnecting secure tunnel...",
+  "C:\\WINDOWS\\system32> MISSION_COMPLETE: Redirecting to extraction...",
 ];
 
 interface HackerSimProps {
