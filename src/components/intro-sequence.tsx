@@ -68,7 +68,7 @@ export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
                <div className="absolute inset-0 bg-primary/30 rounded-full blur-[120px] animate-pulse" />
                <div className="relative z-10 w-64 h-64 md:w-[28rem] md:h-[28rem] flex items-center justify-center">
                   <img 
-                    src={clubLogo?.imageUrl || "/logo.png"} 
+                    src={clubLogo?.imageUrl || "/images/logo.png"} 
                     alt="STEVENS.PY" 
                     className="w-full h-full object-contain drop-shadow-[0_0_30px_rgba(0,84,227,0.5)]"
                     data-ai-hint="tech logo"

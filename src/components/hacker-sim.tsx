@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
@@ -92,12 +93,12 @@ export const HackerSim = ({ isExiting }: HackerSimProps) => {
             <p className="mb-6 opacity-80">Microsoft(R) Windows DOS<br/>(C)Copyright Microsoft Corp 1990-2001.</p>
             {lines.map((line, i) => (
               <div key={i} className="flex gap-2">
-                <span className="text-white whitespace-pre-wrap">{line}</span>
+                <span className="text-white font-black whitespace-pre-wrap">{line}</span>
               </div>
             ))}
             {lines.length === INITIAL_LINES.length && !isExiting && (
               <div className="flex gap-1 items-center mt-2">
-                <span>C:\WINDOWS\system32{'>'}</span>
+                <span className="font-black text-white">C:\WINDOWS\system32{'>'}</span>
                 <span className="w-3 h-5 bg-white animate-pulse" />
               </div>
             )}
