@@ -1,26 +1,34 @@
-
 "use client";
 
 import React from "react";
-import { ShieldCheck } from "lucide-react";
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/sections/footer";
 
 export const MainSite = () => {
   return (
-    <main className="min-h-screen bg-black flex flex-col items-center justify-center p-8 animate-reveal">
-      <div className="flex flex-col items-center gap-6 max-w-2xl text-center">
-        <ShieldCheck className="w-20 h-20 text-primary animate-pulse" />
-        <h1 className="text-6xl md:text-8xl font-headline font-bold tracking-tighter text-white">
-          SPY<span className="text-primary">HACKS</span> 2026
-        </h1>
-        <div className="h-1 w-24 bg-primary rounded-full" />
-        <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
-          The mission has been authorized. This is your terminal for elite innovation.
-        </p>
-        
-        <div className="mt-16 text-[10px] font-code text-primary/30 uppercase tracking-[0.5em] animate-pulse">
-          // STANDBY FOR MISSION PARAMETERS //
-        </div>
-      </div>
-    </main>
+    <div className="flex flex-col min-h-screen bg-background">
+      <Navbar />
+      
+      <main className="flex-grow pt-20">
+        <section className="min-h-[80vh] flex flex-col items-center justify-center p-8 text-center">
+          <div className="p-12 glass-card rounded-3xl max-w-3xl animate-reveal">
+            <h1 className="text-4xl md:text-6xl font-headline font-bold mb-6">
+              MAIN TERMINAL <span className="text-primary">ONLINE</span>
+            </h1>
+            <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
+              Decryption complete. Mission parameters are being loaded into your local environment.
+              Prepare for elite innovation at SPY HACKS 2026.
+            </p>
+            <div className="flex gap-4 justify-center">
+              <div className="h-1 w-12 bg-primary rounded-full animate-pulse" />
+              <div className="h-1 w-12 bg-accent rounded-full animate-pulse [animation-delay:200ms]" />
+              <div className="h-1 w-12 bg-primary rounded-full animate-pulse [animation-delay:400ms]" />
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
   );
 };
