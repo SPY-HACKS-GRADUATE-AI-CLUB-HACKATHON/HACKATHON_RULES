@@ -6,7 +6,7 @@ import { ShieldCheck, Terminal, Cpu, Globe, Lock, ChevronRight } from "lucide-re
 
 export const MainSite = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col overflow-hidden">
+    <div className="min-h-screen bg-background text-foreground flex flex-col overflow-hidden animate-reveal">
       <div className="absolute inset-0 -z-10 opacity-5 bg-[linear-gradient(rgba(0,120,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,120,255,0.1)_1px,transparent_1px)] bg-[length:50px_50px]" />
       
       <nav className="border-b border-white/5 bg-black/40 backdrop-blur-md px-12 h-24 flex items-center justify-between sticky top-0 z-50">
@@ -18,7 +18,7 @@ export const MainSite = () => {
             SPY<span className="text-primary">HACKS</span>
           </span>
         </div>
-        <div className="flex gap-12 text-[11px] font-code font-bold uppercase tracking-[0.3em] text-muted-foreground/60">
+        <div className="flex gap-12 text-[11px] font-mono font-bold uppercase tracking-[0.3em] text-muted-foreground/60">
           <span className="hover:text-primary transition-colors cursor-pointer">Briefing</span>
           <span className="hover:text-primary transition-colors cursor-pointer">Intel</span>
           <span className="hover:text-primary transition-colors cursor-pointer underline underline-offset-8 decoration-primary text-primary">Mission Control</span>
@@ -27,7 +27,7 @@ export const MainSite = () => {
       
       <main className="flex-grow flex items-center justify-center p-12 relative">
         <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          <div className="space-y-12 animate-reveal">
+          <div className="space-y-12">
             <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-[11px] font-black text-primary tracking-[0.2em] uppercase">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               Secure Node: Established
@@ -42,7 +42,7 @@ export const MainSite = () => {
               The extraction protocol is complete. Welcome to the elite unit at <span className="text-white font-bold">SPY HACKS 2026</span>. Standby for operational orders.
             </p>
             
-            <button className="group relative px-8 py-4 bg-primary text-white font-headline font-bold uppercase tracking-widest text-sm overflow-hidden transition-all hover:pr-12">
+            <button className="group relative px-10 py-5 bg-primary text-white font-headline font-black uppercase tracking-widest text-sm overflow-hidden transition-all hover:pr-14">
               <span className="relative z-10">Access Dashboard</span>
               <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all" />
               <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform" />
@@ -55,24 +55,24 @@ export const MainSite = () => {
                <div className="grid grid-cols-2 gap-16 w-full max-w-sm opacity-60">
                   <div className="flex flex-col items-center gap-6 group/icon">
                     <Terminal className="w-10 h-10 group-hover/icon:text-primary transition-colors" />
-                    <span className="text-[10px] font-code font-black uppercase tracking-[0.4em]">Subsystem_01</span>
+                    <span className="text-[10px] font-mono font-black uppercase tracking-[0.4em]">Subsystem_01</span>
                   </div>
                   <div className="flex flex-col items-center gap-6 group/icon">
                     <Cpu className="w-10 h-10 group-hover/icon:text-primary transition-colors" />
-                    <span className="text-[10px] font-code font-black uppercase tracking-[0.4em]">Subsystem_02</span>
+                    <span className="text-[10px] font-mono font-black uppercase tracking-[0.4em]">Subsystem_02</span>
                   </div>
                   <div className="flex flex-col items-center gap-6 group/icon">
                     <Globe className="w-10 h-10 group-hover/icon:text-primary transition-colors" />
-                    <span className="text-[10px] font-code font-black uppercase tracking-[0.4em]">Network_Sync</span>
+                    <span className="text-[10px] font-mono font-black uppercase tracking-[0.4em]">Network_Sync</span>
                   </div>
                   <div className="flex flex-col items-center gap-6 group/icon">
                     <Lock className="w-10 h-10 group-hover/icon:text-primary transition-colors" />
-                    <span className="text-[10px] font-code font-black uppercase tracking-[0.4em]">Vault_Access</span>
+                    <span className="text-[10px] font-mono font-black uppercase tracking-[0.4em]">Vault_Access</span>
                   </div>
                </div>
                
                <div className="text-center space-y-4 pt-12 border-t border-white/10 w-full relative">
-                  <p className="text-[11px] font-code text-primary/60 font-black uppercase tracking-[0.8em]">Operational Readiness</p>
+                  <p className="text-[11px] font-mono text-primary/60 font-black uppercase tracking-[0.8em]">Operational Readiness</p>
                   <p className="text-5xl font-black text-white">100% SECURE</p>
                </div>
             </div>
@@ -80,7 +80,7 @@ export const MainSite = () => {
         </div>
       </main>
 
-      <footer className="px-12 py-10 border-t border-white/5 flex justify-between items-center text-[10px] font-code font-bold text-muted-foreground/40 uppercase tracking-[0.5em]">
+      <footer className="px-12 py-10 border-t border-white/5 flex justify-between items-center text-[10px] font-mono font-bold text-muted-foreground/40 uppercase tracking-[0.5em]">
         <div className="flex items-center gap-6">
           <span>© 2026 STEVENS.PY</span>
           <span className="h-4 w-[1px] bg-white/10" />
