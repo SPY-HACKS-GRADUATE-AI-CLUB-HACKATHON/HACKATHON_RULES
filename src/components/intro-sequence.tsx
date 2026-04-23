@@ -12,7 +12,7 @@ interface IntroSequenceProps {
 export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
   const [step, setStep] = useState(0);
   const [visible, setVisible] = useState(false);
-  const hasRun = useRef(false);
+  const sequenceLock = useRef(false);
 
   const clubLogo = PlaceHolderImages.find(img => img.id === "club-logo");
 
@@ -32,34 +32,20 @@ export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
   ];
 
   useEffect(() => {
-    if (hasRun.current) return;
-    hasRun.current = true;
+    if (sequenceLock.current) return;
+    sequenceLock.current = true;
 
     const showDuration = 4000;
     const fadeDuration = 1500;
 
     const runSequence = async () => {
-      // Step 0
-      setStep(0);
-      setVisible(true);
-      await new Promise(r => setTimeout(r, showDuration));
-      setVisible(false);
-      await new Promise(r => setTimeout(r, fadeDuration));
-
-      // Step 1
-      setStep(1);
-      setVisible(true);
-      await new Promise(r => setTimeout(r, showDuration));
-      setVisible(false);
-      await new Promise(r => setTimeout(r, fadeDuration));
-
-      // Step 2 (Logo)
-      setStep(2);
-      setVisible(true);
-      await new Promise(r => setTimeout(r, showDuration));
-      setVisible(false);
-      await new Promise(r => setTimeout(r, fadeDuration));
-
+      for (let i = 0; i < sequences.length; i++) {
+        setStep(i);
+        setVisible(true);
+        await new Promise(r => setTimeout(r, showDuration));
+        setVisible(false);
+        await new Promise(r => setTimeout(r, fadeDuration));
+      }
       onComplete();
     };
 
@@ -78,32 +64,34 @@ export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
       )}>
         {current.isLogo ? (
           <div className="flex flex-col items-center">
-            <div className="relative mb-12">
-               <div className="absolute inset-0 bg-primary/30 rounded-full blur-[100px] animate-pulse" />
-               <img 
-                src={clubLogo?.imageUrl} 
-                alt="STEVENS.PY" 
-                className="w-64 h-64 md:w-96 md:h-96 object-contain relative z-10 rounded-full border-8 border-primary/20 shadow-2xl"
-                data-ai-hint="tech logo"
-               />
+            <div className="relative mb-16 flex items-center justify-center">
+               <div className="absolute inset-0 bg-primary/30 rounded-full blur-[120px] animate-pulse" />
+               <div className="relative z-10 w-64 h-64 md:w-[28rem] md:h-[28rem] flex items-center justify-center">
+                  <img 
+                    src={clubLogo?.imageUrl || "/logo.png"} 
+                    alt="STEVENS.PY" 
+                    className="w-full h-full object-contain drop-shadow-[0_0_30px_rgba(0,84,227,0.5)]"
+                    data-ai-hint="tech logo"
+                  />
+               </div>
             </div>
-            <p className="text-4xl md:text-7xl text-primary font-black tracking-[0.8em] uppercase text-center animate-pulse">
+            <p className="text-4xl md:text-8xl text-primary font-black tracking-[1em] uppercase text-center animate-pulse ml-[1em]">
               {current.sub}
             </p>
           </div>
         ) : (
           <>
-            <h2 className="text-7xl md:text-[12rem] font-black text-center mb-8 tracking-tighter text-white uppercase leading-none max-w-7xl">
+            <h2 className="text-7xl md:text-[14rem] font-black text-center mb-10 tracking-tighter text-white uppercase leading-none max-w-7xl">
               {current.title}
             </h2>
-            <p className="text-2xl md:text-5xl text-primary/40 font-bold text-center max-w-4xl tracking-[0.5em] uppercase">
+            <p className="text-2xl md:text-6xl text-primary/40 font-bold text-center max-w-4xl tracking-[0.6em] uppercase">
               {current.sub}
             </p>
           </>
         )}
       </div>
 
-      <div className="absolute bottom-16 left-16 right-16 flex justify-between text-[10px] font-mono text-primary/10 uppercase tracking-[1em]">
+      <div className="absolute bottom-16 left-16 right-16 flex justify-between text-[11px] font-mono text-primary/10 uppercase tracking-[1.2em] pointer-events-none">
         <span>INITIALIZING_CINEMATIC_BUFFER</span>
         <span>STREAM_SECURE_STVNS_02</span>
       </div>
