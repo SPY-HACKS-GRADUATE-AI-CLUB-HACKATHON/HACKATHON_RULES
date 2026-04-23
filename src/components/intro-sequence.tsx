@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -12,6 +13,7 @@ export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
   const [step, setStep] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
+  // Split into distinct beats to ensure none of the lines "go away too fast"
   const statements = [
     {
       text: "AN IDEA BEGINS HERE.",
@@ -19,17 +21,21 @@ export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
     },
     {
       text: "IT’S WATCHING IT COME ALIVE.",
-      subtext: "AND KNOWING YOU BUILT IT.",
+      subtext: "A DIGITAL SOUL AWAKENS.",
+    },
+    {
+      text: "AND KNOWING YOU BUILT IT.",
+      subtext: "THE ULTIMATE CREATION.",
     },
     {
       isLogo: true,
       text: "STEVENS.PY",
-      subtext: "PRESENTS",
+      subtext: "ESTABLISHED 2026",
     },
   ];
 
   useEffect(() => {
-    // 6 seconds per statement for a slow, classy, gentle feel
+    // 6 seconds per statement for a slow, classy feel
     const intervalTime = 6000; 
     
     const timer = setInterval(() => {
@@ -39,13 +45,14 @@ export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
         setStep((prev) => {
           if (prev >= statements.length - 1) {
             clearInterval(timer);
+            // After the final slide, wait 4 seconds then transition to main site
             setTimeout(onComplete, 4000);
             return prev;
           }
           return prev + 1;
         });
         setIsTransitioning(false);
-      }, 3000); // 3 second liquid transition
+      }, 3000); // 3 second transition window for overlapping fades
       
     }, intervalTime);
 
@@ -54,6 +61,7 @@ export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
 
   return (
     <div className="h-screen w-full bg-black flex items-center justify-center overflow-hidden px-4 relative font-headline">
+      {/* Subtle background glow */}
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_50%_50%,#4D89F0_0%,transparent_70%)]" />
 
       {statements.map((stmt, index) => (
@@ -83,6 +91,7 @@ export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
         </div>
       ))}
 
+      {/* Decorative HUD elements */}
       <div className="absolute bottom-16 left-16 right-16 flex justify-between text-[11px] font-code text-primary/10 uppercase tracking-[0.8em]">
         <span>SYSTEM_SYNC_ACTIVE</span>
         <span>ENCRYPTION_LAYER_ALPHA</span>
