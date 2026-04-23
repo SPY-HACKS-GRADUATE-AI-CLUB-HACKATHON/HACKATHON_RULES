@@ -1,10 +1,12 @@
 import type { NextConfig } from 'next';
 
+// Check if we are running the build command (production) or the dev server (local)
+const isProd = process.env.NODE_ENV === 'production';
+
 const nextConfig: NextConfig = {
-  // --- GITHUB PAGES SETTINGS ---
   output: 'export',
-  basePath: '/HACKATHON_RULES', 
-  // -----------------------------
+  // Only apply the basePath if it is a production build
+  basePath: isProd ? '/HACKATHON_RULES' : '', 
 
   typescript: {
     ignoreBuildErrors: true,
@@ -13,10 +15,7 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    // Required for static export so GitHub doesn't try to run an image server
     unoptimized: true, 
-    
-    // Your existing external image patterns
     remotePatterns: [
       {
         protocol: 'https',
