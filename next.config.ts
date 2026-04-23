@@ -1,7 +1,11 @@
-import type {NextConfig} from 'next';
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // --- GITHUB PAGES SETTINGS ---
+  output: 'export',
+  basePath: '/HACKATHON_RULES', 
+  // -----------------------------
+
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -9,6 +13,10 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
+    // Required for static export so GitHub doesn't try to run an image server
+    unoptimized: true, 
+    
+    // Your existing external image patterns
     remotePatterns: [
       {
         protocol: 'https',
