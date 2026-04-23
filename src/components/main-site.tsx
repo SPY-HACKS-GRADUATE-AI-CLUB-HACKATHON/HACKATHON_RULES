@@ -27,6 +27,16 @@ export const MainSite = () => {
       
       <main className="flex-grow flex flex-col items-center py-16 px-6 max-w-7xl mx-auto w-full relative">
         
+        {/* Top Center Logo */}
+        <div className="mb-12 flex justify-center animate-in fade-in zoom-in duration-1000">
+          <img 
+            src="/images/logo.png" 
+            alt="SPY HACKS" 
+            className="w-32 h-32 md:w-48 md:h-48 object-contain drop-shadow-[0_0_20px_rgba(77,137,240,0.3)]"
+            data-ai-hint="tech logo"
+          />
+        </div>
+
         {/* Security Status Header */}
         <div className="mb-16 flex flex-col items-center gap-6 w-full max-w-md">
           <div className={`px-8 py-3 rounded-full border flex items-center gap-3 font-mono text-xs font-black tracking-[0.3em] uppercase transition-all duration-700 shadow-2xl ${

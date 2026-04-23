@@ -21,6 +21,7 @@ export const FAQAssistant = () => {
   const [input, setInput] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const scrollRef = React.useRef<HTMLDivElement>(null);
+  const isFirstRender = React.useRef(true);
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
@@ -41,8 +42,14 @@ export const FAQAssistant = () => {
   };
 
   React.useEffect(() => {
+    // Prevent auto-scrolling on initial mount to avoid page jumps
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    
     if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+      scrollRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
   }, [messages]);
 
