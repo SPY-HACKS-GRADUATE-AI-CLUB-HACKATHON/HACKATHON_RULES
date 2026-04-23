@@ -4,26 +4,26 @@
 
 @layer base {
   :root {
-    --background: 210 11% 10%;
+    --background: 210 20% 4%;
     --foreground: 210 20% 98%;
-    --card: 210 11% 12%;
+    --card: 210 20% 6%;
     --card-foreground: 210 20% 98%;
-    --popover: 210 11% 10%;
+    --popover: 210 20% 4%;
     --popover-foreground: 210 20% 98%;
-    --primary: 217 85% 62%;
+    --primary: 217 91% 60%;
     --primary-foreground: 210 20% 98%;
-    --secondary: 210 11% 18%;
+    --secondary: 210 20% 12%;
     --secondary-foreground: 210 20% 98%;
-    --muted: 210 11% 18%;
-    --muted-foreground: 210 10% 70%;
-    --accent: 185 87% 74%;
-    --accent-foreground: 210 11% 10%;
+    --muted: 210 20% 12%;
+    --muted-foreground: 210 10% 60%;
+    --accent: 185 90% 60%;
+    --accent-foreground: 210 20% 4%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 20% 98%;
-    --border: 210 11% 20%;
-    --input: 210 11% 20%;
-    --ring: 217 85% 62%;
-    --radius: 0.75rem;
+    --border: 210 20% 12%;
+    --input: 210 20% 12%;
+    --ring: 217 91% 60%;
+    --radius: 0.5rem;
   }
 }
 
@@ -32,26 +32,24 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-body;
-    background-image: 
-      radial-gradient(circle at 2px 2px, rgba(77, 137, 240, 0.05) 1px, transparent 0);
-    background-size: 40px 40px;
+    @apply bg-background text-foreground font-body antialiased selection:bg-primary/30;
+    background-image: radial-gradient(circle at 50% 50%, rgba(20, 30, 60, 0.4) 0%, transparent 100%);
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-headline;
+    @apply font-headline tracking-tight;
   }
+}
+
+.font-code {
+  font-family: 'Inter', monospace;
 }
 
 .glass-card {
-  @apply bg-card/60 backdrop-blur-md border border-white/10;
+  @apply bg-card/40 backdrop-blur-xl border border-white/5 shadow-2xl;
 }
 
-.text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
-}
-
-.animate-glow {
-  box-shadow: 0 0 15px theme('colors.primary.DEFAULT');
+.text-glow {
+  text-shadow: 0 0 15px rgba(56, 136, 255, 0.5);
 }
 
 @keyframes scan {
@@ -60,14 +58,10 @@
 }
 
 .animate-scan {
-  animation: scan 0.4s ease-in-out forwards;
+  animation: scan 2s linear infinite;
 }
 
-@keyframes reveal {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-.animate-reveal {
-  animation: reveal 0.6s ease-out forwards;
+.terminal-cursor::after {
+  content: '_';
+  @apply animate-pulse ml-1;
 }

@@ -1,29 +1,23 @@
-
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 const INITIAL_LINES = [
-  "> INITIALIZING HANDSHAKE PROTOCOL...",
-  "> TUNNEL ESTABLISHED VIA PORT 8080",
-  "> DETECTING FIREWALL: IDS-ALPHA-9",
-  "> BYPASSING SSL VERIFICATION...",
-  "> ACCESS GRANTED TO SECURE NODE [192.168.1.1]",
-  "> EXTRACTING CLASSIFIED PACKAGES...",
-  "> CORE MODULE DECRYPTED SUCCESSFULLY",
-  "> SCANNING FOR VULNERABILITIES...",
-  "> SYSTEM OVERRIDE INITIATED",
-  "> STEVENS.PY SECURITY PROTOCOL ENGAGED",
-  "> AUTHORIZING AGENT ACCESS...",
+  "> AUTH_INIT: Stevens.py Security Layer 0.1",
+  "> ESTABLISHING ENCRYPTED TUNNEL...",
+  "> BYPASSING VIRTUAL FIREWALL: [OK]",
+  "> DETECTING AGENT CREDENTIALS: [PENDING]",
+  "> SYNCING MISSION DATA...",
+  "> CORE OVERRIDE ENGAGED.",
+  "> ACCESS LEVEL: TOP SECRET",
 ];
 
 const EXIT_LINES = [
-  "> VERIFICATION COMPLETE.",
-  "> DECRYPTION PROTOCOL SUCCESSFUL.",
-  "> REDIRECTING TO MISSION BRIEFING...",
-  "> DISCONNECTING SECURE TUNNEL...",
-  "> EXITING SHELL...",
+  "> DECRYPTION SUCCESSFUL.",
+  "> REDIRECTING TO SECURE CHANNEL...",
+  "> TERMINATING LOCAL HANDSHAKE.",
+  "> ENJOY THE MISSION.",
 ];
 
 interface HackerSimProps {
@@ -35,7 +29,6 @@ export const HackerSim = ({ isExiting }: HackerSimProps) => {
   const [isFadingOut, setIsFadingOut] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Handle Initial Sequence
   useEffect(() => {
     let currentLine = 0;
     const interval = setInterval(() => {
@@ -45,12 +38,11 @@ export const HackerSim = ({ isExiting }: HackerSimProps) => {
       } else {
         clearInterval(interval);
       }
-    }, 250);
+    }, 400);
 
     return () => clearInterval(interval);
   }, []);
 
-  // Handle Exit Sequence
   useEffect(() => {
     if (isExiting) {
       let exitIdx = 0;
@@ -60,10 +52,9 @@ export const HackerSim = ({ isExiting }: HackerSimProps) => {
           exitIdx++;
         } else {
           clearInterval(interval);
-          // Start fading out the terminal text after the last exit line
-          setTimeout(() => setIsFadingOut(true), 500);
+          setTimeout(() => setIsFadingOut(true), 800);
         }
-      }, 300);
+      }, 250);
       return () => clearInterval(interval);
     }
   }, [isExiting]);
@@ -78,19 +69,19 @@ export const HackerSim = ({ isExiting }: HackerSimProps) => {
     <div 
       ref={containerRef}
       className={cn(
-        "h-full w-full bg-black p-8 font-code text-primary overflow-hidden transition-all duration-[1500ms] ease-in-out",
+        "h-full w-full bg-black p-12 font-code text-primary/80 transition-all duration-1000",
         isFadingOut ? "opacity-0 scale-105" : "opacity-100"
       )}
     >
-      <div className="max-w-4xl mx-auto space-y-1">
+      <div className="max-w-3xl mx-auto space-y-2 opacity-60">
         {lines.map((line, i) => (
-          <div key={i} className="animate-reveal opacity-0 [animation-fill-mode:forwards] text-sm md:text-base">
-            <span className="opacity-50">[{new Date().toLocaleTimeString()}]</span> {line}
+          <div key={i} className="animate-reveal opacity-0 [animation-fill-mode:forwards] text-xs uppercase tracking-widest">
+            {line}
           </div>
         ))}
-        {lines.length === INITIAL_LINES.length && !isExiting && (
-          <div className="mt-8 animate-pulse text-accent font-bold tracking-[0.3em]">
-            _ MISSION DATA LOADED
+        {!isExiting && lines.length === INITIAL_LINES.length && (
+          <div className="pt-4 text-accent/60 terminal-cursor text-xs">
+            AWAITING INPUT...
           </div>
         )}
       </div>
