@@ -38,7 +38,7 @@ export const MainSite = () => {
             </h1>
             
             <p className="text-muted-foreground/80 text-xl font-medium leading-relaxed max-w-md">
-              The decryption is complete. The mission parameters are now synchronized. Welcome to the elite unit at <span className="text-white font-bold">SPY HACKS 2026</span>.
+              The extraction protocol is complete. Welcome to the elite unit at <span className="text-white font-bold">SPY HACKS 2026</span>. Standby for operational orders.
             </p>
             
             <button className="group relative px-8 py-4 bg-primary text-white font-headline font-bold uppercase tracking-widest text-sm overflow-hidden transition-all hover:pr-12">
@@ -72,7 +72,7 @@ export const MainSite = () => {
                
                <div className="text-center space-y-4 pt-12 border-t border-white/10 w-full relative">
                   <p className="text-[11px] font-code text-primary/60 font-black uppercase tracking-[0.8em]">Operational Readiness</p>
-                  <p className="text-5xl font-black text-white text-glow">100% SECURE</p>
+                  <p className="text-5xl font-black text-white">100% SECURE</p>
                </div>
             </div>
           </div>

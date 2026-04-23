@@ -2,22 +2,24 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import { cn } from "@/lib/utils";
+import { Terminal } from "lucide-react";
 
 const INITIAL_LINES = [
-  "[BOOT_SEQUENCE]: STEVENS_PY_OS_v2.6",
-  "ESTABLISHING SECURE CONNECTION...",
-  "BYPASSING KERNEL FIREWALL... [DONE]",
-  "INJECTING PAYLOAD... 0x7FFD2E",
-  "DECRYPTING MISSION DATA...",
-  "ACCESS GRANTED: LEVEL ALPHA",
-  "INITIALIZING AGENT_INTEL_STREAM",
+  "C:\\WINDOWS\\system32> STEVENS_PY_BOOT_v2.6 initializing...",
+  "C:\\WINDOWS\\system32> Secure Link established.",
+  "C:\\WINDOWS\\system32> Verifying mission credentials...",
+  "C:\\WINDOWS\\system32> WARNING: Clearance level 'GHOST' required.",
+  "C:\\WINDOWS\\system32> Handshaking with remote server...",
+  "C:\\WINDOWS\\system32> Bypassing NTLM authentication...",
+  "C:\\WINDOWS\\system32> Accessing encrypted directory /STEVENS_PY/...",
 ];
 
 const EXIT_LINES = [
-  "DECRYPTION_SUCCESSFUL",
-  "TUNNEL_RE-ROUTED_TO_MISSION_CONTROL",
-  "ERASING_TRACES...",
-  "WELCOME, AGENT.",
+  "C:\\WINDOWS\\system32> SUCCESS: Identity Verified.",
+  "C:\\WINDOWS\\system32> Decrypting mission_briefing.pdf...",
+  "C:\\WINDOWS\\system32> Syncing data to extraction point...",
+  "C:\\WINDOWS\\system32> Disconnecting secure tunnel.",
+  "C:\\WINDOWS\\system32> Redirecting to Mission Control...",
 ];
 
 interface HackerSimProps {
@@ -26,7 +28,6 @@ interface HackerSimProps {
 
 export const HackerSim = ({ isExiting }: HackerSimProps) => {
   const [lines, setLines] = useState<string[]>([]);
-  const [isFadingOut, setIsFadingOut] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -52,7 +53,6 @@ export const HackerSim = ({ isExiting }: HackerSimProps) => {
           exitIdx++;
         } else {
           clearInterval(interval);
-          setTimeout(() => setIsFadingOut(true), 1000);
         }
       }, 400);
       return () => clearInterval(interval);
@@ -66,28 +66,44 @@ export const HackerSim = ({ isExiting }: HackerSimProps) => {
   }, [lines]);
 
   return (
-    <div 
-      ref={containerRef}
-      className={cn(
-        "h-full w-full bg-black p-8 md:p-16 font-code text-primary transition-all duration-1000 flex flex-col justify-center items-center",
-        isFadingOut ? "opacity-0" : "opacity-100"
-      )}
-    >
-      <div className="max-w-6xl w-full space-y-4 text-center md:text-left">
-        {lines.map((line, i) => (
-          <div 
-            key={i} 
-            className="animate-reveal opacity-0 [animation-fill-mode:forwards] text-2xl md:text-5xl font-black tracking-tight"
-          >
-            <span className="text-primary/20 mr-4 select-none">#</span>
-            {line}
+    <div className={cn(
+      "transition-all duration-1000 w-[95%] max-w-5xl",
+      isExiting && "scale-105 opacity-0"
+    )}>
+      <div className="xp-window w-full">
+        {/* Windows XP Title Bar */}
+        <div className="xp-title-bar">
+          <div className="flex items-center gap-2">
+            <Terminal size={14} className="text-white" />
+            <span className="font-bold">C:\WINDOWS\system32\cmd.exe</span>
           </div>
-        ))}
-        {!isExiting && lines.length === INITIAL_LINES.length && (
-          <div className="pt-12 text-accent animate-pulse text-2xl md:text-5xl font-black">
-            {">"} AWAITING_AUTHORIZED_INPUT_
+          <div className="flex items-center gap-1">
+            <div className="w-5 h-5 bg-[#0058e6] border border-white/30 flex items-center justify-center text-xs font-bold shadow-[inset_1px_1px_rgba(255,255,255,0.2)]">_</div>
+            <div className="w-5 h-5 bg-[#0058e6] border border-white/30 flex items-center justify-center text-xs font-bold shadow-[inset_1px_1px_rgba(255,255,255,0.2)]">□</div>
+            <div className="w-5 h-5 bg-[#d33a16] border border-white/30 flex items-center justify-center text-xs font-bold shadow-[inset_1px_1px_rgba(255,255,255,0.2)]">X</div>
           </div>
-        )}
+        </div>
+        
+        {/* Terminal Content */}
+        <div 
+          ref={containerRef}
+          className="bg-black p-5 h-[450px] font-mono text-white text-lg md:text-xl overflow-y-auto"
+        >
+          <div className="space-y-1">
+            <p className="mb-6 opacity-80">Microsoft(R) Windows DOS<br/>(C)Copyright Microsoft Corp 1990-2001.</p>
+            {lines.map((line, i) => (
+              <div key={i} className="flex gap-2">
+                <span className="text-white whitespace-pre-wrap">{line}</span>
+              </div>
+            ))}
+            {lines.length === INITIAL_LINES.length && !isExiting && (
+              <div className="flex gap-1 items-center mt-2">
+                <span>C:\WINDOWS\system32{'>'}</span>
+                <span className="w-3 h-5 bg-white animate-pulse" />
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

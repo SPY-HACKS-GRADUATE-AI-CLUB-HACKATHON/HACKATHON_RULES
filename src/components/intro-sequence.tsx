@@ -29,7 +29,8 @@ export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
   ];
 
   useEffect(() => {
-    const intervalTime = 6000; // 6 seconds per statement for a slow, classy feel
+    // 6 seconds per statement for a slow, classy, gentle feel
+    const intervalTime = 6000; 
     
     const timer = setInterval(() => {
       setIsTransitioning(true);
@@ -38,13 +39,13 @@ export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
         setStep((prev) => {
           if (prev >= statements.length - 1) {
             clearInterval(timer);
-            setTimeout(onComplete, 3000);
+            setTimeout(onComplete, 4000);
             return prev;
           }
           return prev + 1;
         });
         setIsTransitioning(false);
-      }, 2500); // Very slow, gentle transition
+      }, 3000); // 3 second liquid transition
       
     }, intervalTime);
 
@@ -59,7 +60,7 @@ export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
         <div
           key={index}
           className={cn(
-            "absolute flex flex-col items-center transition-all duration-[2500ms] ease-in-out",
+            "absolute flex flex-col items-center transition-all duration-[3000ms] ease-in-out",
             step === index && !isTransitioning
               ? "opacity-100 scale-100 translate-y-0" 
               : "opacity-0 scale-105 -translate-y-4 pointer-events-none"
@@ -67,16 +68,16 @@ export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
         >
           {stmt.isLogo && (
             <div className="relative mb-16">
-              <div className="absolute inset-0 bg-primary/10 rounded-full blur-[100px]" />
-              <ShieldCheck className="w-48 h-48 text-primary relative z-10" />
+              <div className="absolute inset-0 bg-primary/20 rounded-full blur-[120px]" />
+              <ShieldCheck className="w-48 h-48 text-primary relative z-10 animate-pulse" />
             </div>
           )}
           
-          <h2 className="text-6xl md:text-[10rem] font-black text-center mb-8 tracking-tighter text-white uppercase leading-none max-w-7xl">
+          <h2 className="text-5xl md:text-[8rem] font-black text-center mb-8 tracking-tighter text-white uppercase leading-none max-w-7xl">
             {stmt.text}
           </h2>
           
-          <p className="text-xl md:text-3xl text-primary/40 font-code font-bold text-center max-w-4xl tracking-[0.5em] uppercase">
+          <p className="text-xl md:text-3xl text-primary/50 font-code font-bold text-center max-w-4xl tracking-[0.5em] uppercase">
              {stmt.subtext}
           </p>
         </div>
@@ -84,7 +85,7 @@ export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
 
       <div className="absolute bottom-16 left-16 right-16 flex justify-between text-[11px] font-code text-primary/10 uppercase tracking-[0.8em]">
         <span>SYSTEM_SYNC_ACTIVE</span>
-        <span>LEVEL_ALPHA_CLEARANCE</span>
+        <span>ENCRYPTION_LAYER_ALPHA</span>
       </div>
     </div>
   );
