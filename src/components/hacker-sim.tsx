@@ -1,67 +1,62 @@
-
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
+
+const HACKING_LINES = [
+  "> INITIALIZING HANDSHAKE PROTOCOL...",
+  "> TUNNEL ESTABLISHED VIA PORT 8080",
+  "> DETECTING FIREWALL: IDS-ALPHA-9",
+  "> BYPASSING SSL VERIFICATION...",
+  "> ACCESS GRANTED TO SECURE NODE [192.168.1.1]",
+  "> EXTRACTING CLASSIFIED PACKAGES...",
+  "> CORE MODULE DECRYPTED SUCCESSFULLY",
+  "> SCANNING FOR VULNERABILITIES...",
+  "> SYSTEM OVERRIDE INITIATED",
+  "> STEVENS.PY SECURITY PROTOCOL ENGAGED",
+  "> AUTHORIZING AGENT ACCESS...",
+];
 
 export const HackerSim = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [lines, setLines] = useState<string[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const katakana = "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズヅブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン";
-    const latin = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const nums = "0123456789";
-    const alphabet = katakana + latin + nums;
-
-    const fontSize = 16;
-    const columns = canvas.width / fontSize;
-
-    const rainDrops: number[] = [];
-
-    for (let x = 0; x < columns; x++) {
-      rainDrops[x] = 1;
-    }
-
-    const draw = () => {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = "#4d89f0"; // Using your primary theme color
-      ctx.font = fontSize + "px monospace";
-
-      for (let i = 0; i < rainDrops.length; i++) {
-        const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-        ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
-
-        if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          rainDrops[i] = 0;
-        }
-        rainDrops[i]++;
+    let currentLine = 0;
+    const interval = setInterval(() => {
+      if (currentLine < HACKING_LINES.length) {
+        setLines((prev) => [...prev, HACKING_LINES[currentLine]]);
+        currentLine++;
+      } else {
+        clearInterval(interval);
       }
-    };
+    }, 300);
 
-    const interval = setInterval(draw, 30);
-
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      clearInterval(interval);
-      window.removeEventListener("resize", handleResize);
-    };
+    return () => clearInterval(interval);
   }, []);
 
-  return <canvas ref={canvasRef} className="block" />;
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+  }, [lines]);
+
+  return (
+    <div 
+      ref={containerRef}
+      className="h-full w-full bg-black p-8 font-code text-primary overflow-hidden"
+    >
+      <div className="max-w-4xl mx-auto space-y-1">
+        {lines.map((line, i) => (
+          <div key={i} className="animate-reveal opacity-0 [animation-fill-mode:forwards] text-sm md:text-base">
+            <span className="opacity-50">[{new Date().toLocaleTimeString()}]</span> {line}
+          </div>
+        ))}
+        {lines.length === HACKING_LINES.length && (
+          <div className="mt-8 animate-pulse text-accent font-bold tracking-[0.3em]">
+            _ MISSION DATA LOADED
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };

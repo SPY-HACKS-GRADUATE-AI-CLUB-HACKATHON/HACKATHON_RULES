@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -32,12 +31,13 @@ export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
       setStep((prev) => {
         if (prev >= statements.length - 1) {
           clearInterval(timer);
+          // Wait for the last fade out before completing
           setTimeout(onComplete, 2000);
-          return prev;
+          return prev + 1; // Move past the last index to trigger fade out
         }
         return prev + 1;
       });
-    }, 4000);
+    }, 2000); // 2 second interval as requested
 
     return () => clearInterval(timer);
   }, [onComplete, statements.length]);
@@ -48,16 +48,18 @@ export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
         <div
           key={index}
           className={`absolute flex flex-col items-center transition-all duration-1000 ease-in-out ${
-            step === index ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+            step === index 
+              ? "opacity-100 scale-100 blur-0" 
+              : "opacity-0 scale-95 blur-md pointer-events-none"
           }`}
         >
           {stmt.isLogo && (
-            <ShieldCheck className="w-16 h-16 text-primary mb-6 animate-pulse" />
+            <ShieldCheck className="w-20 h-20 text-primary mb-8 animate-pulse" />
           )}
-          <h2 className="text-3xl md:text-5xl font-headline font-bold text-center mb-4 tracking-tight">
+          <h2 className="text-4xl md:text-6xl font-headline font-bold text-center mb-6 tracking-tighter">
             {stmt.text}
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground font-body text-center">
+          <p className="text-xl md:text-2xl text-muted-foreground font-body text-center max-w-lg">
             {stmt.subtext}
           </p>
         </div>
