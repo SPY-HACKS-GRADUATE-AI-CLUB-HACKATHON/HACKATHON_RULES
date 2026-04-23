@@ -48,22 +48,23 @@ export const MainSite = () => {
             SYSTEM_STATUS: {isActivated ? "ACTIVATED" : "DEACTIVATED"}
           </div>
 
-          <div className="w-full space-y-3">
-            <label className="text-[10px] font-mono font-bold uppercase tracking-[0.4em] text-muted-foreground/60 block text-center">
-              Input Extraction Key
+          <div className="w-full space-y-4">
+            <label className="text-[11px] font-mono font-black uppercase tracking-[0.5em] text-primary/70 block text-center">
+              Awaiting Extraction Key
             </label>
             <div className="relative group">
+               <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-white/5 to-primary/20 rounded-2xl blur-md opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
                <Input
                 type="text"
                 placeholder="____-____-____"
                 value={accessCode}
                 onChange={handleCodeChange}
                 disabled={isActivated}
-                className="bg-black/60 border-white/5 h-16 text-center font-mono tracking-[0.5em] text-2xl text-primary focus:border-primary/50 transition-all rounded-2xl placeholder:opacity-20 uppercase"
+                className="relative bg-black/80 border-white/20 h-20 text-center font-mono tracking-[0.5em] text-3xl text-primary focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all rounded-2xl placeholder:opacity-20 uppercase shadow-2xl"
               />
               {isActivated && (
-                <div className="absolute inset-0 bg-emerald-500/5 border border-emerald-500/30 rounded-2xl flex items-center justify-center pointer-events-none animate-in fade-in zoom-in duration-500">
-                  <span className="text-emerald-400 font-mono font-black tracking-widest text-sm">ACCESS_GRANTED_UID_04</span>
+                <div className="absolute inset-0 bg-emerald-500/10 border-2 border-emerald-500/50 rounded-2xl flex items-center justify-center pointer-events-none animate-in fade-in zoom-in duration-500 z-10">
+                  <span className="text-emerald-400 font-mono font-black tracking-[0.3em] text-sm uppercase">Access Granted: UID_04_SECURED</span>
                 </div>
               )}
             </div>
