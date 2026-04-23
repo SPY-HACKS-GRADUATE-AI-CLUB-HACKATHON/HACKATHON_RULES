@@ -7,6 +7,8 @@ import { ShieldCheck, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+const REGISTRATION_LINK = "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=7GkajbUDRUOuIdrREvX7T4hgFkTHiG9DqlLEVj27WSZUQzJWVUhTNjlUQVJCOEpETlhVVTM4WFU5Qi4u";
+
 export const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
 
@@ -38,8 +40,10 @@ export const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-            <Button size="sm" className="bg-primary hover:bg-primary/90 rounded-full px-6">
-              Register Now
+            <Button asChild size="sm" className="bg-primary hover:bg-primary/90 rounded-full px-6">
+              <a href={REGISTRATION_LINK} target="_blank" rel="noopener noreferrer">
+                Register Now
+              </a>
             </Button>
           </div>
 
@@ -72,8 +76,10 @@ export const Navbar = () => {
               {link.name}
             </Link>
           ))}
-          <Button className="w-full bg-primary hover:bg-primary/90 rounded-full">
-            Register Now
+          <Button asChild className="w-full bg-primary hover:bg-primary/90 rounded-full">
+            <a href={REGISTRATION_LINK} target="_blank" rel="noopener noreferrer">
+              Register Now
+            </a>
           </Button>
         </div>
       </div>

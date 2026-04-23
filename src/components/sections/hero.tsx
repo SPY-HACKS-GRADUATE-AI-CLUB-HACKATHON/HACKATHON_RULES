@@ -3,6 +3,8 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Terminal, Lock, ChevronRight } from "lucide-react";
 
+const REGISTRATION_LINK = "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=7GkajbUDRUOuIdrREvX7T4hgFkTHiG9DqlLEVj27WSZUQzJWVUhTNjlUQVJCOEpETlhVVTM4WFU5Qi4u";
+
 export const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
@@ -24,9 +26,11 @@ export const Hero = () => {
               36 hours of code, caffeine, and cutting-edge challenges in the heart of Stevens Institute of Technology.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 group">
-                Register for the Mission
-                <ChevronRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 group">
+                <a href={REGISTRATION_LINK} target="_blank" rel="noopener noreferrer">
+                  Register for the Mission
+                  <ChevronRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </a>
               </Button>
               <Button size="lg" variant="outline" className="border-border hover:bg-secondary rounded-full px-8 h-14">
                 View Agent Briefing
@@ -41,7 +45,6 @@ export const Hero = () => {
                   src="https://picsum.photos/seed/spytech2/800/600" 
                   alt="Spy Hacks Tech" 
                   className="object-cover w-full h-full opacity-60 group-hover:scale-105 transition-transform duration-700"
-                  data-ai-hint="spy technology"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">

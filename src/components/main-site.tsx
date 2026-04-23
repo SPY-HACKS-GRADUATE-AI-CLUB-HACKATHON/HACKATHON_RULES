@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Lock, Unlock, ChevronRight, Globe, Terminal, FileText, Database, Shield } from "lucide-react";
 
+const REGISTRATION_LINK = "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=7GkajbUDRUOuIdrREvX7T4hgFkTHiG9DqlLEVj27WSZUQzJWVUhTNjlUQVJCOEpETlhVVTM4WFU5Qi4u";
+
 export const MainSite = () => {
   const [accessCode, setAccessCode] = useState("");
   const [isActivated, setIsActivated] = useState(false);
@@ -33,7 +35,6 @@ export const MainSite = () => {
             src="/images/logo.png" 
             alt="SPY HACKS" 
             className="w-32 h-32 md:w-48 md:h-48 object-contain drop-shadow-[0_0_20px_rgba(77,137,240,0.3)]"
-            data-ai-hint="tech logo"
           />
         </div>
 
@@ -86,9 +87,15 @@ export const MainSite = () => {
               </div>
               
               <div className="flex flex-col items-center gap-6">
-                <Button size="lg" className="h-20 px-16 rounded-full text-xl font-black uppercase tracking-[0.2em] bg-primary hover:bg-primary/90 shadow-[0_0_40px_rgba(0,84,227,0.3)] transition-all hover:scale-105 active:scale-95">
-                  Register for Mission
-                  <ChevronRight className="ml-2 w-6 h-6" />
+                <Button 
+                  size="lg" 
+                  asChild
+                  className="h-20 px-16 rounded-full text-xl font-black uppercase tracking-[0.2em] bg-primary hover:bg-primary/90 shadow-[0_0_40px_rgba(0,84,227,0.3)] transition-all hover:scale-105 active:scale-95"
+                >
+                  <a href={REGISTRATION_LINK} target="_blank" rel="noopener noreferrer">
+                    Register for Mission
+                    <ChevronRight className="ml-2 w-6 h-6" />
+                  </a>
                 </Button>
                 <span className="text-[10px] font-mono text-muted-foreground/40 uppercase tracking-widest">Awaiting Identity Verification...</span>
               </div>
