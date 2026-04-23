@@ -10,7 +10,7 @@
     {
       "id": "club-logo",
       "description": "Stevens.py Graduate AI Club Logo",
-      "imageUrl": "https://picsum.photos/seed/spy-duck/600/600",
+      "imageUrl": "/logo.png",
       "imageHint": "tech logo"
     },
     {
