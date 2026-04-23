@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from "react";
@@ -20,7 +21,7 @@ export const MainSite = () => {
         <div className="flex gap-12 text-[11px] font-code font-bold uppercase tracking-[0.3em] text-muted-foreground/60">
           <span className="hover:text-primary transition-colors cursor-pointer">Briefing</span>
           <span className="hover:text-primary transition-colors cursor-pointer">Intel</span>
-          <span className="hover:text-primary transition-colors cursor-pointer underline underline-offset-8 decoration-primary text-primary">Live Status</span>
+          <span className="hover:text-primary transition-colors cursor-pointer underline underline-offset-8 decoration-primary text-primary">Mission Control</span>
         </div>
       </nav>
       
