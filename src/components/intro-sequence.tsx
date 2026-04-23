@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 
@@ -12,6 +12,7 @@ interface IntroSequenceProps {
 export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
   const [step, setStep] = useState(0);
   const [visible, setVisible] = useState(false);
+  const hasRun = useRef(false);
 
   const clubLogo = PlaceHolderImages.find(img => img.id === "club-logo");
 
@@ -31,6 +32,9 @@ export const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
   ];
 
   useEffect(() => {
+    if (hasRun.current) return;
+    hasRun.current = true;
+
     const showDuration = 4000;
     const fadeDuration = 1500;
 

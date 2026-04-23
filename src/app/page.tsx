@@ -1,6 +1,7 @@
+
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { HackerSim } from "@/components/hacker-sim";
 import { IntroSequence } from "@/components/intro-sequence";
 import { MainSite } from "@/components/main-site";
@@ -29,6 +30,10 @@ export default function Home() {
       }, 2500);
     }
   };
+
+  const handleIntroComplete = useCallback(() => {
+    setStage("main");
+  }, []);
 
   if (stage === "simulation" || stage === "interact" || stage === "exiting_sim") {
     return (
@@ -96,7 +101,7 @@ export default function Home() {
   }
 
   if (stage === "intro") {
-    return <IntroSequence onComplete={() => setStage("main")} />;
+    return <IntroSequence onComplete={handleIntroComplete} />;
   }
 
   return <MainSite />;

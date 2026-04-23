@@ -1,3 +1,40 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-bg",
+      "description": "Tech-themed abstract background with blue circuits",
+      "imageUrl": "https://picsum.photos/seed/spytech/1200/800",
+      "imageHint": "abstract technology"
+    },
+    {
+      "id": "club-logo",
+      "description": "Stevens.py Graduate AI Club Logo",
+      "imageUrl": "https://picsum.photos/seed/spy-duck/600/600",
+      "imageHint": "tech logo"
+    },
+    {
+      "id": "sponsor-1",
+      "description": "Tech Sponsor Logo 1",
+      "imageUrl": "https://picsum.photos/seed/sponsor1/200/100",
+      "imageHint": "tech company"
+    },
+    {
+      "id": "sponsor-2",
+      "description": "Tech Sponsor Logo 2",
+      "imageUrl": "https://picsum.photos/seed/sponsor2/200/100",
+      "imageHint": "digital logo"
+    },
+    {
+      "id": "sponsor-3",
+      "description": "Tech Sponsor Logo 3",
+      "imageUrl": "https://picsum.photos/seed/sponsor3/200/100",
+      "imageHint": "software company"
+    },
+    {
+      "id": "sponsor-4",
+      "description": "Tech Sponsor Logo 4",
+      "imageUrl": "https://picsum.photos/seed/sponsor4/200/100",
+      "imageHint": "innovation lab"
+    }
+  ]
 }
