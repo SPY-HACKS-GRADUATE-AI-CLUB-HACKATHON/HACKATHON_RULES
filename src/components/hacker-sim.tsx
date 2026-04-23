@@ -4,20 +4,20 @@ import React, { useEffect, useState, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 const INITIAL_LINES = [
-  "> AUTH_INIT: Stevens.py Security Layer 0.1",
-  "> ESTABLISHING ENCRYPTED TUNNEL...",
-  "> BYPASSING VIRTUAL FIREWALL: [OK]",
-  "> DETECTING AGENT CREDENTIALS: [PENDING]",
-  "> SYNCING MISSION DATA...",
-  "> CORE OVERRIDE ENGAGED.",
-  "> ACCESS LEVEL: TOP SECRET",
+  "[BOOT_SEQUENCE]: STEVENS_PY_OS_v2.6",
+  "ESTABLISHING SECURE CONNECTION...",
+  "BYPASSING KERNEL FIREWALL... [DONE]",
+  "INJECTING PAYLOAD... 0x7FFD2E",
+  "DECRYPTING MISSION DATA...",
+  "ACCESS GRANTED: LEVEL ALPHA",
+  "INITIALIZING AGENT_INTEL_STREAM",
 ];
 
 const EXIT_LINES = [
-  "> DECRYPTION SUCCESSFUL.",
-  "> REDIRECTING TO SECURE CHANNEL...",
-  "> TERMINATING LOCAL HANDSHAKE.",
-  "> ENJOY THE MISSION.",
+  "DECRYPTION_SUCCESSFUL",
+  "TUNNEL_RE-ROUTED_TO_MISSION_CONTROL",
+  "ERASING_TRACES...",
+  "WELCOME, AGENT.",
 ];
 
 interface HackerSimProps {
@@ -38,7 +38,7 @@ export const HackerSim = ({ isExiting }: HackerSimProps) => {
       } else {
         clearInterval(interval);
       }
-    }, 400);
+    }, 600);
 
     return () => clearInterval(interval);
   }, []);
@@ -52,9 +52,9 @@ export const HackerSim = ({ isExiting }: HackerSimProps) => {
           exitIdx++;
         } else {
           clearInterval(interval);
-          setTimeout(() => setIsFadingOut(true), 800);
+          setTimeout(() => setIsFadingOut(true), 1000);
         }
-      }, 250);
+      }, 400);
       return () => clearInterval(interval);
     }
   }, [isExiting]);
@@ -69,19 +69,23 @@ export const HackerSim = ({ isExiting }: HackerSimProps) => {
     <div 
       ref={containerRef}
       className={cn(
-        "h-full w-full bg-black p-12 font-code text-primary/80 transition-all duration-1000",
-        isFadingOut ? "opacity-0 scale-105" : "opacity-100"
+        "h-full w-full bg-black p-8 md:p-16 font-code text-primary transition-all duration-1000 flex flex-col justify-center items-center",
+        isFadingOut ? "opacity-0" : "opacity-100"
       )}
     >
-      <div className="max-w-3xl mx-auto space-y-2 opacity-60">
+      <div className="max-w-6xl w-full space-y-4 text-center md:text-left">
         {lines.map((line, i) => (
-          <div key={i} className="animate-reveal opacity-0 [animation-fill-mode:forwards] text-xs uppercase tracking-widest">
+          <div 
+            key={i} 
+            className="animate-reveal opacity-0 [animation-fill-mode:forwards] text-2xl md:text-5xl font-black tracking-tight"
+          >
+            <span className="text-primary/20 mr-4 select-none">#</span>
             {line}
           </div>
         ))}
         {!isExiting && lines.length === INITIAL_LINES.length && (
-          <div className="pt-4 text-accent/60 terminal-cursor text-xs">
-            AWAITING INPUT...
+          <div className="pt-12 text-accent animate-pulse text-2xl md:text-5xl font-black">
+            {">"} AWAITING_AUTHORIZED_INPUT_
           </div>
         )}
       </div>

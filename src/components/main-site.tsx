@@ -6,7 +6,6 @@ import { ShieldCheck, Terminal, Cpu, Globe, Lock, ChevronRight } from "lucide-re
 export const MainSite = () => {
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col overflow-hidden">
-      {/* Dynamic Grid Background */}
       <div className="absolute inset-0 -z-10 opacity-5 bg-[linear-gradient(rgba(0,120,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,120,255,0.1)_1px,transparent_1px)] bg-[length:50px_50px]" />
       
       <nav className="border-b border-white/5 bg-black/40 backdrop-blur-md px-12 h-24 flex items-center justify-between sticky top-0 z-50">
@@ -26,14 +25,14 @@ export const MainSite = () => {
       </nav>
       
       <main className="flex-grow flex items-center justify-center p-12 relative">
-        <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           <div className="space-y-12 animate-reveal">
             <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-[11px] font-black text-primary tracking-[0.2em] uppercase">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               Secure Node: Established
             </div>
             
-            <h1 className="text-7xl md:text-[10rem] font-black tracking-tighter leading-[0.8] uppercase text-white">
+            <h1 className="text-7xl md:text-[12rem] font-black tracking-tighter leading-[0.8] uppercase text-white">
               CORE <br/>
               <span className="text-primary">ACTIVE</span>
             </h1>
@@ -50,9 +49,8 @@ export const MainSite = () => {
           </div>
 
           <div className="relative group">
-            {/* Fancy UI Frame */}
             <div className="absolute -inset-4 bg-primary/5 rounded-[2rem] blur-2xl" />
-            <div className="glass-card p-16 rounded-[2rem] relative border-primary/20 flex flex-col items-center justify-center space-y-16 animate-reveal [animation-delay:400ms]">
+            <div className="glass-card p-16 rounded-[3rem] relative border-primary/20 flex flex-col items-center justify-center space-y-16 animate-reveal [animation-delay:400ms]">
                <div className="grid grid-cols-2 gap-16 w-full max-w-sm opacity-60">
                   <div className="flex flex-col items-center gap-6 group/icon">
                     <Terminal className="w-10 h-10 group-hover/icon:text-primary transition-colors" />

@@ -14,7 +14,7 @@ export default function Home() {
     if (stage === "simulation") {
       const timer = setTimeout(() => {
         setStage("interact");
-      }, 3500);
+      }, 4000);
       return () => clearTimeout(timer);
     }
   }, [stage]);
@@ -50,16 +50,13 @@ export default function Home() {
         
         {stage === "interact" && (
           <div className="absolute z-50 animate-in fade-in zoom-in duration-1000">
-            <div className="glass-card p-10 rounded-none border-primary/20 text-center space-y-6">
-              <div className="flex justify-center mb-4">
-                <div className="w-12 h-1 bg-primary/40 animate-pulse" />
-              </div>
-              <h2 className="text-xs font-code uppercase tracking-[0.5em] text-primary">Authorization Required</h2>
-              <p className="text-xl font-headline font-light tracking-widest text-white/90">
-                CLICK ANYWHERE TO DECRYPT
+            <div className="glass-card p-12 rounded-none border-primary/40 text-center space-y-6">
+              <h2 className="text-xs font-code uppercase tracking-[0.5em] text-primary/60 mb-4">Authorization Required</h2>
+              <p className="text-2xl md:text-3xl font-headline font-bold tracking-widest text-white">
+                CLICK TO INITIALIZE
               </p>
-              <div className="flex justify-center pt-4">
-                <div className="w-12 h-1 bg-primary/40 animate-pulse" />
+              <div className="flex justify-center pt-6">
+                <div className="w-16 h-0.5 bg-primary/40 animate-pulse" />
               </div>
             </div>
           </div>
