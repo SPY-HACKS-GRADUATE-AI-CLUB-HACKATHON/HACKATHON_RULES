@@ -5,7 +5,30 @@ import React, { useState } from "react";
 import { FAQAssistant } from "@/components/sections/faq-assistant";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Lock, Unlock, ChevronRight, Globe, Terminal, FileText, Database, Shield } from "lucide-react";
+import { 
+  Lock, 
+  Unlock, 
+  ChevronRight, 
+  Globe, 
+  Terminal, 
+  FileText, 
+  Database, 
+  Shield, 
+  AlertTriangle,
+  CheckCircle2,
+  XCircle
+} from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const REGISTRATION_LINK = "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=7GkajbUDRUOuIdrREvX7T4hgFkTHiG9DqlLEVj27WSZUQzJWVUhTNjlUQVJCOEpETlhVVTM4WFU5Qi4u";
 const EXTRACTION_KEY = "2026SPYHACKS_$$_";
@@ -13,13 +36,24 @@ const EXTRACTION_KEY = "2026SPYHACKS_$$_";
 export const MainSite = () => {
   const [accessCode, setAccessCode] = useState("");
   const [isActivated, setIsActivated] = useState(false);
+  const [showPolicyDialog, setShowPolicyDialog] = useState(false);
 
   const handleCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const code = e.target.value;
     setAccessCode(code);
     if (code === EXTRACTION_KEY) {
-      setIsActivated(true);
+      setShowPolicyDialog(true);
     }
+  };
+
+  const handleAcceptPolicies = () => {
+    setIsActivated(true);
+    setShowPolicyDialog(false);
+  };
+
+  const handleDeclinePolicies = () => {
+    setAccessCode("");
+    setShowPolicyDialog(false);
   };
 
   return (
@@ -29,6 +63,7 @@ export const MainSite = () => {
       
       <main className="flex-grow flex flex-col items-center py-16 px-6 max-w-7xl mx-auto w-full relative">
         
+        {/* Centered Logo */}
         <div className="mb-12 flex justify-center animate-in fade-in zoom-in duration-1000">
           <img 
             src="/images/logo.png" 
@@ -47,6 +82,7 @@ export const MainSite = () => {
             SYSTEM_STATUS: {isActivated ? "ACTIVATED" : "DEACTIVATED"}
           </div>
 
+          {/* Prominent Input Field */}
           <div className="w-full space-y-4">
             <label className="text-[11px] font-mono font-black uppercase tracking-[0.5em] text-primary/70 block text-center">
               Awaiting Extraction Key
@@ -151,6 +187,95 @@ export const MainSite = () => {
           SECURE_CONNECTION_ESTABLISHED
         </div>
       </footer>
+
+      {/* Policy Acknowledgement Dialog */}
+      <AlertDialog open={showPolicyDialog} onOpenChange={setShowPolicyDialog}>
+        <AlertDialogContent className="max-w-2xl bg-[#0a0a0a] border-white/10 text-white shadow-[0_0_50px_rgba(0,0,0,1)]">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-2xl font-black tracking-tighter uppercase flex items-center gap-2">
+              <AlertTriangle className="text-primary w-6 h-6" />
+              Mission Protocol & Conduct
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-muted-foreground text-sm font-medium">
+              Awaiting biometric confirmation. You must acknowledge and adhere to the following protocols to access the mission-critical systems.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          <ScrollArea className="h-[450px] pr-4 mt-4">
+            <div className="space-y-8 text-sm">
+              <section className="space-y-3">
+                <h4 className="flex items-center gap-2 text-primary font-black uppercase tracking-widest">
+                  <XCircle className="w-4 h-4" /> 🚫 No-Show Policy
+                </h4>
+                <ul className="space-y-2 text-muted-foreground font-medium list-disc pl-4">
+                  <li>Registered but didn’t check in by 10:00 AM (April 30) → <span className="text-white font-bold">Automatic disqualification</span></li>
+                  <li>No prior notice of absence → <span className="text-white font-bold">Blacklisted from future SPY events</span></li>
+                </ul>
+              </section>
+
+              <section className="space-y-4">
+                <h4 className="flex items-center gap-2 text-primary font-black uppercase tracking-widest">
+                  <AlertTriangle className="w-4 h-4" /> ⚠️ Disqualification Criteria
+                </h4>
+                
+                <div className="space-y-4 pl-2">
+                  <div className="space-y-2">
+                    <p className="text-white font-bold">1. Attendance & Participation</p>
+                    <ul className="text-muted-foreground list-disc pl-4 space-y-1">
+                      <li>Leaving the venue for extended periods without approval</li>
+                      <li>Entire team not present during final submission or judging</li>
+                      <li>Proxy participation (someone else building/submitting for you)</li>
+                    </ul>
+                  </div>
+
+                  <div className="space-y-2">
+                    <p className="text-white font-bold">2. Fair Play Violations</p>
+                    <ul className="text-muted-foreground list-disc pl-4 space-y-1">
+                      <li>Submitting pre-built / previously developed projects</li>
+                      <li>Using external help beyond publicly available resources (e.g., getting someone outside your team to code)</li>
+                      <li>Copying another team’s idea, code, or UI</li>
+                    </ul>
+                  </div>
+
+                  <div className="space-y-2">
+                    <p className="text-white font-bold">3. Submission Rules</p>
+                    <ul className="text-muted-foreground list-disc pl-4 space-y-1">
+                      <li>Missing the final submission deadline</li>
+                      <li>Failing to provide required deliverables (code, demo, presentation)</li>
+                      <li>Broken or non-functional demo at judging time</li>
+                    </ul>
+                  </div>
+
+                  <div className="space-y-2">
+                    <p className="text-white font-bold">4. Conduct & Integrity</p>
+                    <ul className="text-muted-foreground list-disc pl-4 space-y-1">
+                      <li>Plagiarism (code, content, presentation)</li>
+                      <li>Any form of cheating, manipulation, or misrepresentation</li>
+                      <li>Disruptive, disrespectful, or inappropriate behavior</li>
+                    </ul>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </ScrollArea>
+
+          <AlertDialogFooter className="mt-6">
+            <AlertDialogCancel 
+              onClick={handleDeclinePolicies}
+              className="bg-transparent border-white/10 hover:bg-destructive/20 hover:text-destructive text-white rounded-full px-8"
+            >
+              Decline & Exit
+            </AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={handleAcceptPolicies}
+              className="bg-primary hover:bg-primary/90 text-white font-black uppercase tracking-widest rounded-full px-8 flex items-center gap-2"
+            >
+              <CheckCircle2 className="w-4 h-4" />
+              Accept Protocol
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
