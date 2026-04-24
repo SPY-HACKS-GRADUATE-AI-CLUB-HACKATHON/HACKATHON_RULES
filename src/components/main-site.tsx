@@ -8,28 +8,27 @@ import { Input } from "@/components/ui/input";
 import { Lock, Unlock, ChevronRight, Globe, Terminal, FileText, Database, Shield } from "lucide-react";
 
 const REGISTRATION_LINK = "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=7GkajbUDRUOuIdrREvX7T4hgFkTHiG9DqlLEVj27WSZUQzJWVUhTNjlUQVJCOEpETlhVVTM4WFU5Qi4u";
+const EXTRACTION_KEY = "2026SPYHACKS_$$_";
 
 export const MainSite = () => {
   const [accessCode, setAccessCode] = useState("");
   const [isActivated, setIsActivated] = useState(false);
 
   const handleCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const code = e.target.value.toUpperCase();
+    const code = e.target.value;
     setAccessCode(code);
-    if (code === "SPYHACKS2026ALLGO") {
+    if (code === EXTRACTION_KEY) {
       setIsActivated(true);
     }
   };
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col overflow-x-hidden animate-reveal">
-      {/* Dynamic Grid Background */}
       <div className="absolute inset-0 -z-10 opacity-5 bg-[linear-gradient(rgba(0,120,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,120,255,0.1)_1px,transparent_1px)] bg-[length:50px_50px]" />
       <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
       
       <main className="flex-grow flex flex-col items-center py-16 px-6 max-w-7xl mx-auto w-full relative">
         
-        {/* Top Center Logo */}
         <div className="mb-12 flex justify-center animate-in fade-in zoom-in duration-1000">
           <img 
             src="/images/logo.png" 
@@ -38,7 +37,6 @@ export const MainSite = () => {
           />
         </div>
 
-        {/* Security Status Header */}
         <div className="mb-16 flex flex-col items-center gap-6 w-full max-w-md">
           <div className={`px-8 py-3 rounded-full border flex items-center gap-3 font-mono text-xs font-black tracking-[0.3em] uppercase transition-all duration-700 shadow-2xl ${
             isActivated 
@@ -61,7 +59,7 @@ export const MainSite = () => {
                 value={accessCode}
                 onChange={handleCodeChange}
                 disabled={isActivated}
-                className="relative bg-black/80 border-white/20 h-20 text-center font-mono tracking-[0.5em] text-3xl text-primary focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all rounded-2xl placeholder:opacity-20 uppercase shadow-2xl"
+                className="relative bg-black/80 border-white/40 h-20 text-center font-mono tracking-[0.2em] text-2xl text-primary focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all rounded-2xl placeholder:opacity-20 shadow-2xl"
               />
               {isActivated && (
                 <div className="absolute inset-0 bg-emerald-500/10 border-2 border-emerald-500/50 rounded-2xl flex items-center justify-center pointer-events-none animate-in fade-in zoom-in duration-500 z-10">
@@ -72,13 +70,11 @@ export const MainSite = () => {
           </div>
         </div>
 
-        {/* Content Rendering Logic */}
         {!isActivated ? (
           <div className="w-full flex flex-col items-center gap-24">
-            {/* Restricted Area Preview */}
             <div className="text-center space-y-10 max-w-3xl animate-reveal">
               <div className="space-y-4">
-                <h1 className="text-7xl md:text-[10rem] font-black tracking-tighter uppercase leading-[0.8] text-white">
+                <h1 className="text-7xl md:text-9xl font-black tracking-tighter uppercase leading-[0.8] text-white">
                   MISSION <br/> <span className="text-primary/40">LOCKED</span>
                 </h1>
                 <p className="text-muted-foreground/80 text-xl font-medium tracking-tight">
@@ -101,19 +97,17 @@ export const MainSite = () => {
               </div>
             </div>
 
-            {/* Public Intelligence Section */}
             <div className="w-full border-t border-white/5 pt-24">
               <FAQAssistant />
             </div>
           </div>
         ) : (
           <div className="w-full flex flex-col gap-24 animate-in fade-in slide-in-from-bottom-12 duration-1000">
-            {/* Activated Mission Control Header */}
             <div className="flex flex-col items-center text-center space-y-8">
               <div className="p-6 bg-primary/10 rounded-full mb-4 animate-bounce">
                 <Shield className="w-16 h-16 text-primary" />
               </div>
-              <h1 className="text-8xl md:text-[12rem] font-black tracking-tighter uppercase leading-[0.75] text-white">
+              <h1 className="text-8xl md:text-9xl font-black tracking-tighter uppercase leading-[0.75] text-white">
                 SPY <br/> <span className="text-primary">HACKS</span>
               </h1>
               <p className="text-muted-foreground/80 text-2xl font-medium max-w-2xl leading-relaxed">
@@ -121,7 +115,6 @@ export const MainSite = () => {
               </p>
             </div>
 
-            {/* Decrypted Subsystems (Static Links) */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               {[
                 { icon: FileText, title: "Briefing", desc: "Operational parameters and mission guidelines.", color: "text-primary" },
@@ -141,7 +134,6 @@ export const MainSite = () => {
               ))}
             </div>
 
-            {/* Intelligence Stream */}
             <div className="w-full border-t border-white/5 pt-24">
               <FAQAssistant />
             </div>
@@ -149,7 +141,6 @@ export const MainSite = () => {
         )}
       </main>
 
-      {/* Minimalist Unit Footer */}
       <footer className="px-12 py-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="flex items-center gap-6 text-[10px] font-mono font-black text-muted-foreground/30 uppercase tracking-[0.5em]">
           <span>© 2026 STEVENS.PY</span>
