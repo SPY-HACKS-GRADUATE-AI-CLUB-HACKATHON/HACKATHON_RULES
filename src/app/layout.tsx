@@ -5,6 +5,10 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'SPY HACKS 2026 | Stevens.py',
   description: 'An elite hackathon for innovation, technology, and building the future. Organized by Stevens.py Club.',
+  icons: {
+    icon: '/images/logo.png',
+    apple: '/images/logo.png',
+  },
 };
 
 export default function RootLayout({
@@ -18,6 +22,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <link rel="icon" href="/images/logo.png" />
       </head>
       <body className="font-body antialiased selection:bg-accent/30 selection:text-accent overflow-x-hidden">
         {children}
