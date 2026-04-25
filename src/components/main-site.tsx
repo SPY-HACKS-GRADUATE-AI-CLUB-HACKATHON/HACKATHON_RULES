@@ -47,26 +47,26 @@ const DISCORD_LINK = "https://discord.gg/Cm9uXwgvwV";
 const EXTRACTION_KEY = "2026SPYHACKS_$$_";
 
 const AGENDA_DATA = [
-  { time: "04/30/26 9:00 am", activity: "Registration, Team Formation & Breakfast", location: "Howe 409, Bissinger" },
-  { time: "04/30/26 10:00 am", activity: "Event Kickstart, Keynote Speaker Speech", location: "Howe 409, Bissinger" },
-  { time: "04/30/26 11:30 am", activity: "Hackathon Timer Start", location: "Howe 409, Bissinger" },
-  { time: "04/30/26 1:30 pm", activity: "Lunch", location: "Howe 409, Bissinger" },
-  { time: "04/30/26 2:30 pm", activity: "Hacking Continues", location: "Howe 409, Bissinger" },
-  { time: "04/30/26 4:30 pm", activity: "Hacking Continues", location: "Gateway North TED Stairs" },
-  { time: "04/30/26 6:00 pm", activity: "Snacks", location: "Gateway North TED Stairs" },
-  { time: "04/30/26 9:00 pm", activity: "Hacking Continues (Dinner not Included)", location: "Gateway North TED Stairs" },
-  { time: "05/01/26 12:00 am to 7:30 am", activity: "Hacking Continues (Overnight)", location: "Gateway North TED Stairs" },
-  { time: "05/01/26 7:30 am to 8:30 am", activity: "Final Submission", location: "Online" },
-  { time: "05/01/26 9:00 am", activity: "Breakfast", location: "Gateway North 204" },
-  { time: "05/01/26 10:00 am", activity: "Keynote Speech & Project Showcase", location: "Gateway North 204" },
-  { time: "05/01/26 12:00 pm", activity: "Winners Announcement (End of Event)", location: "Gateway North 204" },
+  { date: "04/30/26", time: "9:00 am", activity: "Registration, Team Formation & Breakfast", location: "Howe 409, Bissinger" },
+  { date: "04/30/26", time: "10:00 am", activity: "Event Kickstart, Keynote Speaker Speech", location: "Howe 409, Bissinger" },
+  { date: "04/30/26", time: "11:30 am", activity: "Hackathon Timer Start", location: "Howe 409, Bissinger" },
+  { date: "04/30/26", time: "1:30 pm", activity: "Lunch", location: "Howe 409, Bissinger" },
+  { date: "04/30/26", time: "2:30 pm", activity: "Hacking Continues", location: "Howe 409, Bissinger" },
+  { date: "04/30/26", time: "4:30 pm", activity: "Hacking Continues", location: "Gateway North TED Stairs" },
+  { date: "04/30/26", time: "6:00 pm", activity: "Snacks", location: "Gateway North TED Stairs" },
+  { date: "04/30/26", time: "9:00 pm", activity: "Hacking Continues (Dinner not Included)", location: "Gateway North TED Stairs" },
+  { date: "05/01/26", time: "12:00 am - 7:30 am", activity: "Hacking Continues (Overnight)", location: "Gateway North TED Stairs" },
+  { date: "05/01/26", time: "7:30 am - 8:30 am", activity: "Final Submission", location: "Online" },
+  { date: "05/01/26", time: "9:00 am", activity: "Breakfast", location: "Gateway North 204" },
+  { date: "05/01/26", time: "10:00 am", activity: "Keynote Speech & Project Showcase", location: "Gateway North 204" },
+  { date: "05/01/26", time: "12:00 pm", activity: "Winners Announcement (End of Event)", location: "Gateway North 204" },
 ];
 
 const LOCATION_DATA = [
-  { day: "Day 1 (30th April)", time: "9:00 am to 4:30 pm", location: "Howe 409, Bissinger" },
-  { day: "Day 1 (30th April)", time: "4:30 pm to Midnight", location: "Gateway North TED Stairs" },
-  { day: "Day 2 (1st May)", time: "Midnight to 9:00 am", location: "Gateway North TED Stairs" },
-  { day: "Day 2 (1st May)", time: "9:00 to 12:00 pm", location: "Gateway North 204" },
+  { day: "Day 1", time: "9:00 am - 4:30 pm", location: "Howe 409, Bissinger" },
+  { day: "Day 1", time: "4:30 pm - Midnight", location: "Gateway North TED Stairs" },
+  { day: "Day 2", time: "Midnight - 9:00 am", location: "Gateway North TED Stairs" },
+  { day: "Day 2", time: "9:00 am - 12:00 pm", location: "Gateway North 204" },
 ];
 
 export const MainSite = () => {
@@ -103,7 +103,8 @@ export const MainSite = () => {
           <Table>
             <TableHeader className="bg-white/5">
               <TableRow className="hover:bg-transparent border-white/5">
-                <TableHead className="text-primary font-black uppercase tracking-widest text-[11px]">Time Period</TableHead>
+                <TableHead className="text-primary font-black uppercase tracking-widest text-[11px]">Date</TableHead>
+                <TableHead className="text-primary font-black uppercase tracking-widest text-[11px]">Time</TableHead>
                 <TableHead className="text-primary font-black uppercase tracking-widest text-[11px]">Operational Activity</TableHead>
                 <TableHead className="text-primary font-black uppercase tracking-widest text-[11px]">Sector Location</TableHead>
               </TableRow>
@@ -111,7 +112,8 @@ export const MainSite = () => {
             <TableBody>
               {AGENDA_DATA.map((item, i) => (
                 <TableRow key={i} className="border-white/5 hover:bg-white/5 transition-colors">
-                  <TableCell className="font-mono text-[12px] text-white/80">{item.time}</TableCell>
+                  <TableCell className="font-mono text-[12px] text-white/80">{item.date}</TableCell>
+                  <TableCell className="font-mono text-[12px] text-white/80 whitespace-nowrap">{item.time}</TableCell>
                   <TableCell className="font-bold text-white text-sm">{item.activity}</TableCell>
                   <TableCell className="text-muted-foreground text-xs italic">{item.location}</TableCell>
                 </TableRow>
@@ -130,7 +132,7 @@ export const MainSite = () => {
           <Table>
             <TableHeader className="bg-white/5">
               <TableRow className="hover:bg-transparent border-white/5">
-                <TableHead className="text-accent font-black uppercase tracking-widest text-[11px]">Deployment Day</TableHead>
+                <TableHead className="text-accent font-black uppercase tracking-widest text-[11px]">Day</TableHead>
                 <TableHead className="text-accent font-black uppercase tracking-widest text-[11px]">Time Window</TableHead>
                 <TableHead className="text-accent font-black uppercase tracking-widest text-[11px]">Assigned Location</TableHead>
               </TableRow>
