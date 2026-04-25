@@ -16,7 +16,11 @@ import {
   Shield, 
   AlertTriangle,
   CheckCircle2,
-  XCircle
+  XCircle,
+  Calendar,
+  MapPin,
+  Mail,
+  MessageSquare
 } from "lucide-react";
 import {
   AlertDialog,
@@ -29,9 +33,41 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const REGISTRATION_LINK = "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=7GkajbUDRUOuIdrREvX7T4hgFkTHiG9DqlLEVj27WSZUQzJWVUhTNjlUQVJCOEpETlhVVTM4WFU5Qi4u";
+const DISCORD_LINK = "https://discord.gg/Cm9uXwgvwV";
 const EXTRACTION_KEY = "2026SPYHACKS_$$_";
+
+const AGENDA_DATA = [
+  { time: "04/30/26 9:00 am", activity: "Registration, Team Formation & Breakfast", location: "Howe 409, Bissinger" },
+  { time: "04/30/26 10:00 am", activity: "Event Kickstart, Keynote Speaker Speech", location: "Howe 409, Bissinger" },
+  { time: "04/30/26 11:30 am", activity: "Hackathon Timer Start", location: "Howe 409, Bissinger" },
+  { time: "04/30/26 1:30 pm", activity: "Lunch", location: "Howe 409, Bissinger" },
+  { time: "04/30/26 2:30 pm", activity: "Hacking Continues", location: "Howe 409, Bissinger" },
+  { time: "04/30/26 4:30 pm", activity: "Hacking Continues", location: "Gateway North TED Stairs" },
+  { time: "04/30/26 6:00 pm", activity: "Snacks", location: "Gateway North TED Stairs" },
+  { time: "04/30/26 9:00 pm", activity: "Hacking Continues (Dinner not Included)", location: "Gateway North TED Stairs" },
+  { time: "05/01/26 12:00 am to 7:30 am", activity: "Hacking Continues (Overnight)", location: "Gateway North TED Stairs" },
+  { time: "05/01/26 7:30 am to 8:30 am", activity: "Final Submission", location: "Online" },
+  { time: "05/01/26 9:00 am", activity: "Breakfast", location: "Gateway North 204" },
+  { time: "05/01/26 10:00 am", activity: "Keynote Speech & Project Showcase", location: "Gateway North 204" },
+  { time: "05/01/26 12:00 pm", activity: "Winners Announcement (End of Event)", location: "Gateway North 204" },
+];
+
+const LOCATION_DATA = [
+  { day: "Day 1 (30th April)", time: "9:00 am to 4:30 pm", location: "Howe 409, Bissinger" },
+  { day: "Day 1 (30th April)", time: "4:30 pm to Midnight", location: "Gateway North TED Stairs" },
+  { day: "Day 2 (1st May)", time: "Midnight to 9:00 am", location: "Gateway North TED Stairs" },
+  { day: "Day 2 (1st May)", time: "9:00 to 12:00 pm", location: "Gateway North 204" },
+];
 
 export const MainSite = () => {
   const [accessCode, setAccessCode] = useState("");
@@ -56,10 +92,92 @@ export const MainSite = () => {
     setShowPolicyDialog(false);
   };
 
+  const renderIntelligenceTables = () => (
+    <div className="w-full space-y-16 animate-reveal mt-24">
+      <div className="space-y-6">
+        <h2 className="text-3xl font-black uppercase tracking-tighter flex items-center gap-3 text-white">
+          <Calendar className="text-primary w-8 h-8" />
+          Mission Agenda
+        </h2>
+        <div className="rounded-2xl border border-white/5 bg-black/40 overflow-hidden shadow-2xl">
+          <Table>
+            <TableHeader className="bg-white/5">
+              <TableRow className="hover:bg-transparent border-white/5">
+                <TableHead className="text-primary font-black uppercase tracking-widest text-[11px]">Time Period</TableHead>
+                <TableHead className="text-primary font-black uppercase tracking-widest text-[11px]">Operational Activity</TableHead>
+                <TableHead className="text-primary font-black uppercase tracking-widest text-[11px]">Sector Location</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {AGENDA_DATA.map((item, i) => (
+                <TableRow key={i} className="border-white/5 hover:bg-white/5 transition-colors">
+                  <TableCell className="font-mono text-[12px] text-white/80">{item.time}</TableCell>
+                  <TableCell className="font-bold text-white text-sm">{item.activity}</TableCell>
+                  <TableCell className="text-muted-foreground text-xs italic">{item.location}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+
+      <div className="space-y-6">
+        <h2 className="text-3xl font-black uppercase tracking-tighter flex items-center gap-3 text-white">
+          <MapPin className="text-accent w-8 h-8" />
+          Tactical Locations
+        </h2>
+        <div className="rounded-2xl border border-white/5 bg-black/40 overflow-hidden shadow-2xl">
+          <Table>
+            <TableHeader className="bg-white/5">
+              <TableRow className="hover:bg-transparent border-white/5">
+                <TableHead className="text-accent font-black uppercase tracking-widest text-[11px]">Deployment Day</TableHead>
+                <TableHead className="text-accent font-black uppercase tracking-widest text-[11px]">Time Window</TableHead>
+                <TableHead className="text-accent font-black uppercase tracking-widest text-[11px]">Assigned Location</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {LOCATION_DATA.map((item, i) => (
+                <TableRow key={i} className="border-white/5 hover:bg-white/5 transition-colors">
+                  <TableCell className="font-bold text-white text-sm">{item.day}</TableCell>
+                  <TableCell className="font-mono text-[12px] text-white/80">{item.time}</TableCell>
+                  <TableCell className="text-muted-foreground text-xs">{item.location}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap justify-center gap-6 py-12">
+        <Button 
+          variant="outline" 
+          size="lg"
+          asChild
+          className="h-16 px-8 rounded-full border-primary/30 bg-primary/5 hover:bg-primary/20 text-primary font-black uppercase tracking-widest group shadow-[0_0_20px_rgba(77,137,240,0.1)] transition-all"
+        >
+          <a href="mailto:spy@stevens.edu">
+            <Mail className="mr-3 w-5 h-5 group-hover:scale-110 transition-transform" />
+            Email Command
+          </a>
+        </Button>
+        <Button 
+          variant="outline" 
+          size="lg"
+          asChild
+          className="h-16 px-8 rounded-full border-accent/30 bg-accent/5 hover:bg-accent/20 text-accent font-black uppercase tracking-widest group shadow-[0_0_20px_rgba(132,237,246,0.1)] transition-all"
+        >
+          <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
+            <MessageSquare className="mr-3 w-5 h-5 group-hover:scale-110 transition-transform" />
+            Join Discord
+          </a>
+        </Button>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col overflow-x-hidden animate-reveal">
       <div className="absolute inset-0 -z-10 opacity-5 bg-[linear-gradient(rgba(0,120,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,120,255,0.1)_1px,transparent_1px)] bg-[length:50px_50px]" />
-      <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
       
       <main className="flex-grow flex flex-col items-center py-16 px-6 max-w-7xl mx-auto w-full relative">
         
@@ -82,7 +200,6 @@ export const MainSite = () => {
             SYSTEM_STATUS: {isActivated ? "ACTIVATED" : "DEACTIVATED"}
           </div>
 
-          {/* Prominent Input Field */}
           <div className="w-full space-y-4">
             <label className="text-[11px] font-mono font-black uppercase tracking-[0.5em] text-primary/70 block text-center">
               Awaiting Extraction Key
@@ -133,6 +250,8 @@ export const MainSite = () => {
               </div>
             </div>
 
+            {renderIntelligenceTables()}
+
             <div className="w-full border-t border-white/5 pt-24">
               <FAQAssistant />
             </div>
@@ -169,6 +288,8 @@ export const MainSite = () => {
                 </div>
               ))}
             </div>
+
+            {renderIntelligenceTables()}
 
             <div className="w-full border-t border-white/5 pt-24">
               <FAQAssistant />
