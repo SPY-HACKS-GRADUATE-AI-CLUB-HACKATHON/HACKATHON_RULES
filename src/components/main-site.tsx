@@ -24,7 +24,9 @@ import {
   MessageSquare,
   LifeBuoy,
   Clock,
-  User
+  User,
+  Trash2,
+  Settings
 } from "lucide-react";
 import {
   AlertDialog,
@@ -57,6 +59,7 @@ import { supabase } from "@/lib/supabase";
 const REGISTRATION_LINK = "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=7GkajbUDRUOuIdrREvX7T4hgFkTHiG9DqlLEVj27WSZUQzJWVUhTNjlUQVJCOEpETlhVVTM4WFU5Qi4u";
 const DISCORD_LINK = "https://discord.gg/Cm9uXwgvwV";
 const EXTRACTION_KEY = "2026SPYHACKS_$$_";
+const ADMIN_KEY = "SPYHACKSADMIN__123";
 
 const AGENDA_DATA = [
   { date: "04/30/26", time: "9:00 am", activity: "Registration, Team Formation & Breakfast", location: "Howe 409, Bissinger" },
@@ -91,6 +94,7 @@ type Request = {
 export const MainSite = () => {
   const [accessCode, setAccessCode] = useState("");
   const [isActivated, setIsActivated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [showPolicyDialog, setShowPolicyDialog] = useState(false);
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [requests, setRequests] = useState<Request[]>([]);
@@ -99,7 +103,7 @@ export const MainSite = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    if (isActivated) {
+    if (isActivated || isAdmin) {
       fetchRequests();
       const channel = supabase
         .channel('requests_changes')
@@ -112,7 +116,7 @@ export const MainSite = () => {
         supabase.removeChannel(channel);
       };
     }
-  }, [isActivated]);
+  }, [isActivated, isAdmin]);
 
   const fetchRequests = async () => {
     const { data, error } = await supabase
@@ -132,11 +136,15 @@ export const MainSite = () => {
     setAccessCode(code);
     if (code === EXTRACTION_KEY) {
       setShowPolicyDialog(true);
+    } else if (code === ADMIN_KEY) {
+      setIsAdmin(true);
+      setIsActivated(false);
     }
   };
 
   const handleAcceptPolicies = () => {
     setIsActivated(true);
+    setIsAdmin(false);
     setShowPolicyDialog(false);
   };
 
@@ -161,6 +169,18 @@ export const MainSite = () => {
       setIssue("");
     }
     setIsSubmitting(false);
+  };
+
+  const handleResolveRequest = async (id: string) => {
+    const { error } = await supabase
+      .from('requests')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      console.error("Error resolving request:", error);
+    }
+    // Real-time channel will trigger fetchRequests
   };
 
   const renderIntelligenceTables = () => (
@@ -247,6 +267,74 @@ export const MainSite = () => {
       </div>
     </div>
   );
+
+  // --- ADMIN VIEW ---
+  if (isAdmin) {
+    return (
+      <div className="min-h-screen bg-background text-foreground flex flex-col items-center py-24 px-6 max-w-7xl mx-auto w-full">
+        <div className="w-full flex justify-between items-center mb-12 border-b border-white/5 pb-8">
+          <div className="flex items-center gap-4">
+            <div className="w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center border border-accent/30">
+              <Settings className="w-8 h-8 text-accent animate-spin-slow" />
+            </div>
+            <div>
+              <h1 className="text-4xl font-black uppercase tracking-tighter text-white">Admin Command Center</h1>
+              <p className="text-muted-foreground font-mono text-[10px] tracking-widest uppercase opacity-60">Real-time Assistance Queue Monitoring</p>
+            </div>
+          </div>
+          <Button 
+            variant="ghost" 
+            onClick={() => { setIsAdmin(false); setAccessCode(""); }}
+            className="text-muted-foreground hover:text-white"
+          >
+            Logout Mission Control
+          </Button>
+        </div>
+
+        <div className="w-full glass-card p-12 rounded-[2.5rem] border-white/5 bg-black/40">
+          <h3 className="text-2xl font-black uppercase tracking-tighter mb-8 text-white flex items-center gap-3">
+            <Clock className="text-primary w-8 h-8" />
+            Active Tactical Requests ({requests.length})
+          </h3>
+          <div className="space-y-6">
+            {requests.length === 0 ? (
+              <div className="h-64 flex flex-col items-center justify-center border-2 border-dashed border-white/5 rounded-3xl">
+                <CheckCircle2 className="w-12 h-12 text-emerald-500 mb-4 opacity-20" />
+                <p className="text-muted-foreground text-sm font-mono tracking-[0.3em] uppercase">No active distress signals</p>
+              </div>
+            ) : (
+              requests.map((req, idx) => (
+                <div key={req.id} className="p-8 rounded-3xl bg-white/5 border border-white/10 flex items-center justify-between group hover:border-primary/50 transition-all shadow-2xl">
+                  <div className="flex items-center gap-8">
+                    <div className="w-16 h-16 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center text-primary font-black text-2xl shadow-inner">
+                      {idx + 1}
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-3 mb-2">
+                        <User className="w-4 h-4 text-accent" />
+                        <span className="text-sm font-mono font-black text-accent uppercase tracking-[0.2em]">TEAM_{req.team_number}</span>
+                        <span className="text-[10px] font-mono text-muted-foreground/40 bg-white/5 px-2 py-1 rounded">
+                          {new Date(req.created_at).toLocaleTimeString()}
+                        </span>
+                      </div>
+                      <p className="text-white text-lg font-medium max-w-2xl leading-relaxed">{req.issue}</p>
+                    </div>
+                  </div>
+                  <Button 
+                    onClick={() => handleResolveRequest(req.id)}
+                    className="h-14 px-8 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-black uppercase tracking-widest flex items-center gap-2 shadow-lg"
+                  >
+                    <CheckCircle2 className="w-5 h-5" />
+                    Resolve Request
+                  </Button>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col overflow-x-hidden animate-reveal">
@@ -366,7 +454,7 @@ export const MainSite = () => {
               ))}
             </div>
 
-            {/* Assistance Queue Section (Persistent when activated) */}
+            {/* Assistance Queue Section */}
             <div className="w-full space-y-12 py-12">
               <div className="flex flex-col md:flex-row gap-12">
                 {/* Form Side */}
