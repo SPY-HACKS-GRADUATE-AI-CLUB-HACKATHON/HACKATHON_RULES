@@ -1,10 +1,11 @@
 
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FAQAssistant } from "@/components/sections/faq-assistant";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { 
   Lock, 
   Unlock, 
@@ -20,7 +21,10 @@ import {
   Calendar,
   MapPin,
   Mail,
-  MessageSquare
+  MessageSquare,
+  LifeBuoy,
+  Clock,
+  User
 } from "lucide-react";
 import {
   AlertDialog,
@@ -32,6 +36,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Table,
@@ -41,6 +52,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { supabase } from "@/lib/supabase";
 
 const REGISTRATION_LINK = "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=7GkajbUDRUOuIdrREvX7T4hgFkTHiG9DqlLEVj27WSZUQzJWVUhTNjlUQVJCOEpETlhVVTM4WFU5Qi4u";
 const DISCORD_LINK = "https://discord.gg/Cm9uXwgvwV";
@@ -69,10 +81,51 @@ const LOCATION_DATA = [
   { day: "Day 2", time: "9:00 am - 12:00 pm", location: "Gateway North 204" },
 ];
 
+type Request = {
+  id: string;
+  team_number: string;
+  issue: string;
+  created_at: string;
+};
+
 export const MainSite = () => {
   const [accessCode, setAccessCode] = useState("");
   const [isActivated, setIsActivated] = useState(false);
   const [showPolicyDialog, setShowPolicyDialog] = useState(false);
+  const [selectedSection, setSelectedSection] = useState<string | null>(null);
+  const [requests, setRequests] = useState<Request[]>([]);
+  const [teamNumber, setTeamNumber] = useState("");
+  const [issue, setIssue] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (isActivated) {
+      fetchRequests();
+      const channel = supabase
+        .channel('requests_changes')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'requests' }, () => {
+          fetchRequests();
+        })
+        .subscribe();
+
+      return () => {
+        supabase.removeChannel(channel);
+      };
+    }
+  }, [isActivated]);
+
+  const fetchRequests = async () => {
+    const { data, error } = await supabase
+      .from('requests')
+      .select('*')
+      .order('created_at', { ascending: true });
+    
+    if (error) {
+      console.error("Error fetching requests:", error);
+    } else {
+      setRequests(data || []);
+    }
+  };
 
   const handleCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const code = e.target.value;
@@ -90,6 +143,24 @@ export const MainSite = () => {
   const handleDeclinePolicies = () => {
     setAccessCode("");
     setShowPolicyDialog(false);
+  };
+
+  const handleRequestSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!teamNumber || !issue) return;
+
+    setIsSubmitting(true);
+    const { error } = await supabase
+      .from('requests')
+      .insert([{ team_number: teamNumber, issue: issue }]);
+
+    if (error) {
+      console.error("Error submitting request:", error);
+    } else {
+      setTeamNumber("");
+      setIssue("");
+    }
+    setIsSubmitting(false);
   };
 
   const renderIntelligenceTables = () => (
@@ -274,12 +345,16 @@ export const MainSite = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               {[
-                { icon: FileText, title: "Briefing", desc: "Operational parameters and mission guidelines.", color: "text-primary" },
-                { icon: Terminal, title: "Hardware", desc: "Decrypted lab access and dev kit allocation.", color: "text-accent" },
-                { icon: Database, title: "Intel Vault", desc: "Exclusive resources for building the future.", color: "text-primary" },
-                { icon: Globe, title: "Network", desc: "Connect with the elite Stevens.py collective.", color: "text-accent" }
+                { id: "briefing", icon: FileText, title: "Briefing", desc: "Operational parameters and mission guidelines.", color: "text-primary" },
+                { id: "hardware", icon: Terminal, title: "Hardware", desc: "Decrypted lab access and dev kit allocation.", color: "text-accent" },
+                { id: "vault", icon: Database, title: "Intel Vault", desc: "Exclusive resources for building the future.", color: "text-primary" },
+                { id: "assistance", icon: LifeBuoy, title: "Request Assistance", desc: "Operational support for building your mission.", color: "text-accent" }
               ].map((item, i) => (
-                <div key={i} className="glass-card p-12 rounded-[2.5rem] border-white/5 hover:border-primary/40 transition-all group cursor-pointer flex flex-col items-center text-center hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+                <div 
+                  key={i} 
+                  onClick={() => setSelectedSection(item.id)}
+                  className="glass-card p-12 rounded-[2.5rem] border-white/5 hover:border-primary/40 transition-all group cursor-pointer flex flex-col items-center text-center hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
+                >
                   <div className={`p-6 rounded-2xl bg-white/5 mb-8 group-hover:bg-primary/10 transition-colors`}>
                     <item.icon className={`w-12 h-12 ${item.color}`} />
                   </div>
@@ -291,6 +366,81 @@ export const MainSite = () => {
               ))}
             </div>
 
+            {/* Assistance Queue Section (Persistent when activated) */}
+            <div className="w-full space-y-12 py-12">
+              <div className="flex flex-col md:flex-row gap-12">
+                {/* Form Side */}
+                <div className="w-full md:w-1/3 glass-card p-8 rounded-[2rem] border-white/5 bg-black/40">
+                  <h3 className="text-2xl font-black uppercase tracking-tighter mb-6 text-white flex items-center gap-2">
+                    <LifeBuoy className="text-accent" />
+                    Deploy Request
+                  </h3>
+                  <form onSubmit={handleRequestSubmit} className="space-y-4">
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-mono uppercase tracking-[0.3em] text-muted-foreground">Team Number</label>
+                      <Input 
+                        value={teamNumber}
+                        onChange={(e) => setTeamNumber(e.target.value)}
+                        placeholder="e.g. 42"
+                        className="bg-black/60 border-white/10 h-12"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-mono uppercase tracking-[0.3em] text-muted-foreground">Operational Issue</label>
+                      <Textarea 
+                        value={issue}
+                        onChange={(e) => setIssue(e.target.value)}
+                        placeholder="Brief description of the roadblock..."
+                        className="bg-black/60 border-white/10 min-h-[120px]"
+                      />
+                    </div>
+                    <Button 
+                      type="submit" 
+                      disabled={isSubmitting}
+                      className="w-full h-12 rounded-xl bg-accent text-accent-foreground font-black uppercase tracking-widest hover:brightness-110"
+                    >
+                      {isSubmitting ? "TRANSMITTING..." : "SEND REQUEST"}
+                    </Button>
+                  </form>
+                </div>
+
+                {/* Queue Side */}
+                <div className="w-full md:w-2/3 glass-card p-8 rounded-[2rem] border-white/5 bg-black/40">
+                  <h3 className="text-2xl font-black uppercase tracking-tighter mb-6 text-white flex items-center gap-2">
+                    <Clock className="text-primary" />
+                    Mission Support Queue
+                  </h3>
+                  <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                    {requests.length === 0 ? (
+                      <div className="h-40 flex items-center justify-center border-2 border-dashed border-white/5 rounded-2xl">
+                        <p className="text-muted-foreground text-sm font-mono tracking-widest">NO_ACTIVE_REQUESTS</p>
+                      </div>
+                    ) : (
+                      requests.map((req, idx) => (
+                        <div key={req.id} className="p-6 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-between group hover:border-primary/30 transition-all">
+                          <div className="flex items-center gap-6">
+                            <div className="w-12 h-12 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center text-primary font-black text-xl">
+                              {idx + 1}
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <User className="w-3 h-3 text-accent" />
+                                <span className="text-xs font-mono font-black text-accent uppercase tracking-widest">Team {req.team_number}</span>
+                              </div>
+                              <p className="text-white font-medium mt-1">{req.issue}</p>
+                            </div>
+                          </div>
+                          <div className="text-[10px] font-mono text-muted-foreground/40 group-hover:text-primary transition-colors">
+                            {new Date(req.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {renderIntelligenceTables()}
 
             <div className="w-full border-t border-white/5 pt-24">
@@ -298,6 +448,66 @@ export const MainSite = () => {
             </div>
           </div>
         )}
+
+        {/* Content Dialogs for Cards */}
+        <Dialog open={!!selectedSection && selectedSection !== 'assistance'} onOpenChange={() => setSelectedSection(null)}>
+          <DialogContent className="bg-[#0a0a0a] border-white/10 text-white max-w-3xl">
+            <DialogHeader>
+              <DialogTitle className="text-3xl font-black uppercase tracking-tighter flex items-center gap-3">
+                {selectedSection === 'briefing' && <><FileText className="text-primary" /> Mission Briefing</>}
+                {selectedSection === 'hardware' && <><Terminal className="text-accent" /> Hardware Intelligence</>}
+                {selectedSection === 'vault' && <><Database className="text-primary" /> Intel Vault Access</>}
+              </DialogTitle>
+              <DialogDescription className="text-muted-foreground font-mono text-[10px] uppercase tracking-widest">
+                Classified Intelligence Segment // SECURE_CLEARANCE_UID_04
+              </DialogDescription>
+            </DialogHeader>
+            <div className="py-8">
+              {selectedSection === 'briefing' && (
+                <div className="space-y-6">
+                  <div className="p-8 rounded-2xl bg-primary/5 border border-primary/20">
+                    <h4 className="text-xl font-black text-primary uppercase mb-4">Target Objective: Topic</h4>
+                    <p className="text-muted-foreground leading-relaxed">
+                      Build a solution that addresses real-world espionage or security challenges using modern tech. 
+                      Specific mission parameters and sub-tracks will be announced at kick-off.
+                    </p>
+                  </div>
+                </div>
+              )}
+              {selectedSection === 'hardware' && (
+                <div className="space-y-6">
+                  <div className="p-8 rounded-2xl bg-accent/5 border border-accent/20">
+                    <h4 className="text-xl font-black text-accent uppercase mb-4">Compute/Hardware Details Allowed</h4>
+                    <ul className="space-y-3 text-muted-foreground list-disc pl-4">
+                      <li>Personal Laptops & Workstations</li>
+                      <li>Standard Microcontrollers (Arduino, ESP32, Raspberry Pi)</li>
+                      <li>Limited Cloud Credit Allocation (AWS/GCP)</li>
+                      <li>Bring your own hardware kits for specific builds</li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+              {selectedSection === 'vault' && (
+                <div className="space-y-6">
+                  <div className="p-8 rounded-2xl bg-primary/5 border border-primary/20">
+                    <h4 className="text-xl font-black text-primary uppercase mb-4">Encrypted Repositories</h4>
+                    <div className="space-y-4">
+                      <p className="text-sm font-mono text-muted-foreground italic tracking-widest opacity-60">FETCHING_LINKS...</p>
+                      <div className="grid gap-3">
+                        {["Mission SDK", "Dataset Vault 01", "Encryption Templates"].map((link) => (
+                          <div key={link} className="p-4 rounded-xl bg-black/40 border border-white/5 flex items-center justify-between hover:bg-white/5 transition-colors cursor-pointer group">
+                            <span className="font-bold text-white uppercase text-xs tracking-widest">{link}</span>
+                            <ChevronRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </DialogContent>
+        </Dialog>
       </main>
 
       <footer className="px-12 py-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
