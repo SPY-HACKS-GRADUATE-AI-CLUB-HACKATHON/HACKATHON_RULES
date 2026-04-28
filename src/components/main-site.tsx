@@ -266,6 +266,27 @@ export const MainSite = () => {
     </div>
   );
 
+  const renderCoSponsors = () => (
+    <div className="w-full py-24 border-t border-white/5 text-center animate-reveal">
+      <div className="mb-12">
+        <h2 className="text-3xl font-black uppercase tracking-tighter text-white">Strategic Partners</h2>
+        <p className="text-muted-foreground font-mono text-[10px] tracking-[0.5em] uppercase mt-2 opacity-60">Co-Sponsored By</p>
+      </div>
+      <div className="flex flex-wrap justify-center items-center gap-12 md:gap-32">
+        <img 
+          src="/images/siai.png" 
+          alt="SIAI" 
+          className="h-16 md:h-20 w-auto object-contain brightness-0 invert opacity-40 hover:opacity-100 transition-all duration-500 hover:scale-110" 
+        />
+        <img 
+          src="/images/cterra.png" 
+          alt="CTERRA" 
+          className="h-16 md:h-20 w-auto object-contain brightness-0 invert opacity-40 hover:opacity-100 transition-all duration-500 hover:scale-110" 
+        />
+      </div>
+    </div>
+  );
+
   if (isAdmin) {
     return (
       <div className="min-h-screen bg-background text-foreground flex flex-col items-center py-24 px-6 max-w-7xl mx-auto w-full">
@@ -412,6 +433,8 @@ export const MainSite = () => {
             <div className="w-full border-t border-white/5 pt-24">
               <FAQAssistant />
             </div>
+
+            {renderCoSponsors()}
           </div>
         ) : (
           <div className="w-full flex flex-col gap-24 animate-in fade-in slide-in-from-bottom-12 duration-1000">
@@ -527,18 +550,10 @@ export const MainSite = () => {
             <div className="w-full border-t border-white/5 pt-24">
               <FAQAssistant />
             </div>
+
+            {renderCoSponsors()}
           </div>
         )}
-
-        {/* Floating Co-Sponsors Badge */}
-        <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 animate-reveal [animation-delay:1000ms]">
-          <span className="text-[10px] font-mono font-black text-primary/40 uppercase tracking-[0.3em]">Co-Sponsored By</span>
-          <div className="flex items-center gap-6 bg-black/40 backdrop-blur-md p-4 rounded-2xl border border-white/5 shadow-2xl">
-             <img src="/images/siai.png" alt="SIAI" className="h-10 w-auto object-contain brightness-0 invert opacity-60 hover:opacity-100 transition-opacity" />
-             <div className="w-px h-8 bg-white/10" />
-             <img src="/images/cterra.png" alt="CTERRA" className="h-10 w-auto object-contain brightness-0 invert opacity-60 hover:opacity-100 transition-opacity" />
-          </div>
-        </div>
 
         <Dialog open={!!selectedSection && selectedSection !== 'assistance'} onOpenChange={() => setSelectedSection(null)}>
           <DialogContent className="bg-[#0a0a0a] border-white/10 text-white max-w-3xl">
