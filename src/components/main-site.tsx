@@ -25,7 +25,6 @@ import {
   LifeBuoy,
   Clock,
   User,
-  Trash2,
   Settings
 } from "lucide-react";
 import {
@@ -180,7 +179,6 @@ export const MainSite = () => {
     if (error) {
       console.error("Error resolving request:", error);
     }
-    // Real-time channel will trigger fetchRequests
   };
 
   const renderIntelligenceTables = () => (
@@ -268,7 +266,6 @@ export const MainSite = () => {
     </div>
   );
 
-  // --- ADMIN VIEW ---
   if (isAdmin) {
     return (
       <div className="min-h-screen bg-background text-foreground flex flex-col items-center py-24 px-6 max-w-7xl mx-auto w-full">
@@ -342,7 +339,6 @@ export const MainSite = () => {
       
       <main className="flex-grow flex flex-col items-center py-16 px-6 max-w-7xl mx-auto w-full relative">
         
-        {/* Centered Logo */}
         <div className="mb-12 flex justify-center animate-in fade-in zoom-in duration-1000">
           <img 
             src="/images/logo.png" 
@@ -454,10 +450,8 @@ export const MainSite = () => {
               ))}
             </div>
 
-            {/* Assistance Queue Section */}
             <div className="w-full space-y-12 py-12">
               <div className="flex flex-col md:flex-row gap-12">
-                {/* Form Side */}
                 <div className="w-full md:w-1/3 glass-card p-8 rounded-[2rem] border-white/5 bg-black/40">
                   <h3 className="text-2xl font-black uppercase tracking-tighter mb-6 text-white flex items-center gap-2">
                     <LifeBuoy className="text-accent" />
@@ -492,7 +486,6 @@ export const MainSite = () => {
                   </form>
                 </div>
 
-                {/* Queue Side */}
                 <div className="w-full md:w-2/3 glass-card p-8 rounded-[2rem] border-white/5 bg-black/40">
                   <h3 className="text-2xl font-black uppercase tracking-tighter mb-6 text-white flex items-center gap-2">
                     <Clock className="text-primary" />
@@ -537,7 +530,16 @@ export const MainSite = () => {
           </div>
         )}
 
-        {/* Content Dialogs for Cards */}
+        {/* Floating Co-Sponsors Badge */}
+        <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 animate-reveal [animation-delay:1000ms]">
+          <span className="text-[10px] font-mono font-black text-primary/40 uppercase tracking-[0.3em]">Co-Sponsored By</span>
+          <div className="flex items-center gap-6 bg-black/40 backdrop-blur-md p-4 rounded-2xl border border-white/5 shadow-2xl">
+             <img src="/images/siai.png" alt="SIAI" className="h-10 w-auto object-contain brightness-0 invert opacity-60 hover:opacity-100 transition-opacity" />
+             <div className="w-px h-8 bg-white/10" />
+             <img src="/images/cterra.png" alt="CTERRA" className="h-10 w-auto object-contain brightness-0 invert opacity-60 hover:opacity-100 transition-opacity" />
+          </div>
+        </div>
+
         <Dialog open={!!selectedSection && selectedSection !== 'assistance'} onOpenChange={() => setSelectedSection(null)}>
           <DialogContent className="bg-[#0a0a0a] border-white/10 text-white max-w-3xl">
             <DialogHeader>
@@ -609,7 +611,6 @@ export const MainSite = () => {
         </div>
       </footer>
 
-      {/* Policy Acknowledgement Dialog */}
       <AlertDialog open={showPolicyDialog} onOpenChange={setShowPolicyDialog}>
         <AlertDialogContent className="max-w-2xl bg-[#0a0a0a] border-white/10 text-white shadow-[0_0_50px_rgba(0,0,0,1)]">
           <AlertDialogHeader>
