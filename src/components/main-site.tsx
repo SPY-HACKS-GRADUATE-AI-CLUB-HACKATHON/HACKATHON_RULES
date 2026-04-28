@@ -1,7 +1,8 @@
 
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
+import Image from "next/image";
 import { FAQAssistant } from "@/components/sections/faq-assistant";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,7 +11,6 @@ import {
   Lock, 
   Unlock, 
   ChevronRight, 
-  Globe, 
   Terminal, 
   FileText, 
   Database, 
@@ -25,7 +25,8 @@ import {
   LifeBuoy,
   Clock,
   User,
-  Settings
+  Settings,
+  Signal
 } from "lucide-react";
 import {
   AlertDialog,
@@ -59,6 +60,7 @@ const REGISTRATION_LINK = "https://forms.cloud.microsoft/Pages/ResponsePage.aspx
 const DISCORD_LINK = "https://discord.gg/Cm9uXwgvwV";
 const EXTRACTION_KEY = "2026SPYHACKS_$$_";
 const ADMIN_KEY = "SPYHACKSADMIN__123";
+const MISSION_START = new Date("2026-04-30T09:00:00");
 
 const AGENDA_DATA = [
   { date: "04/30/26", time: "9:00 am", activity: "Registration, Team Formation & Breakfast", location: "Howe 409, Bissinger" },
@@ -100,6 +102,24 @@ export const MainSite = () => {
   const [teamNumber, setTeamNumber] = useState("");
   const [issue, setIssue] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = new Date();
+      const diff = MISSION_START.getTime() - now.getTime();
+      
+      if (diff > 0) {
+        setTimeLeft({
+          days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((diff / 1000 / 60) % 60),
+          seconds: Math.floor((diff / 1000) % 60)
+        });
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     if (isActivated || isAdmin) {
@@ -273,14 +293,18 @@ export const MainSite = () => {
         <p className="text-muted-foreground font-mono text-[10px] tracking-[0.5em] uppercase mt-2 opacity-60">Co-Sponsored By</p>
       </div>
       <div className="flex flex-wrap justify-center items-center gap-12 md:gap-32">
-        <img 
+        <Image 
           src="/images/siai.png" 
           alt="SIAI" 
+          width={256}
+          height={256}
           className="h-48 md:h-64 w-auto object-contain transition-all duration-500 hover:scale-105" 
         />
-        <img 
+        <Image 
           src="/images/cterra.png" 
           alt="CTERRA" 
+          width={256}
+          height={256}
           className="h-48 md:h-64 w-auto object-contain transition-all duration-500 hover:scale-105" 
         />
       </div>
@@ -361,9 +385,11 @@ export const MainSite = () => {
       <main className="flex-grow flex flex-col items-center py-16 px-6 max-w-7xl mx-auto w-full relative">
         
         <div className="mb-12 flex justify-center animate-in fade-in zoom-in duration-1000">
-          <img 
+          <Image 
             src="/images/logo.png" 
             alt="SPY HACKS" 
+            width={192}
+            height={192}
             className="w-32 h-32 md:w-48 md:h-48 object-contain drop-shadow-[0_0_20px_rgba(77,137,240,0.3)]"
           />
         </div>
@@ -411,6 +437,20 @@ export const MainSite = () => {
                 <p className="text-muted-foreground/80 text-xl font-medium tracking-tight">
                   After registration, you will receive an access key which will give you all the mission briefings.
                 </p>
+                
+                <div className="flex justify-center gap-4 mt-8">
+                  {[
+                    { label: "DAYS", value: timeLeft.days },
+                    { label: "HOURS", value: timeLeft.hours },
+                    { label: "MINS", value: timeLeft.minutes },
+                    { label: "SECS", value: timeLeft.seconds }
+                  ].map((unit) => (
+                    <div key={unit.label} className="bg-black/40 border border-white/5 rounded-xl p-4 min-w-[80px]">
+                      <div className="text-2xl font-black text-primary font-mono">{unit.value.toString().padStart(2, '0')}</div>
+                      <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest">{unit.label}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
               
               <div className="flex flex-col items-center gap-6">
@@ -424,7 +464,10 @@ export const MainSite = () => {
                     <ChevronRight className="ml-2 w-6 h-6" />
                   </a>
                 </Button>
-                <span className="text-[10px] font-mono text-muted-foreground/40 uppercase tracking-widest">Awaiting Identity Verification...</span>
+                <div className="flex items-center gap-2 text-[10px] font-mono text-muted-foreground/40 uppercase tracking-widest">
+                  <Signal className="w-3 h-3 animate-pulse" />
+                  Awaiting Identity Verification...
+                </div>
               </div>
             </div>
 
