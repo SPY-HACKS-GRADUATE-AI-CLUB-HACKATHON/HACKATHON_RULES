@@ -269,19 +269,19 @@ export const MainSite = () => {
   const renderCoSponsors = () => (
     <div className="w-full py-24 border-t border-white/5 text-center animate-reveal">
       <div className="mb-12">
-        <h2 className="text-3xl font-black uppercase tracking-tighter text-white">Strategic Partners</h2>
+        <h2 className="text-4xl font-black uppercase tracking-tighter text-white">Strategic Partners</h2>
         <p className="text-muted-foreground font-mono text-[10px] tracking-[0.5em] uppercase mt-2 opacity-60">Co-Sponsored By</p>
       </div>
       <div className="flex flex-wrap justify-center items-center gap-12 md:gap-32">
         <img 
           src="/images/siai.png" 
           alt="SIAI" 
-          className="h-16 md:h-20 w-auto object-contain brightness-0 invert opacity-40 hover:opacity-100 transition-all duration-500 hover:scale-110" 
+          className="h-48 md:h-64 w-auto object-contain transition-all duration-500 hover:scale-105" 
         />
         <img 
           src="/images/cterra.png" 
           alt="CTERRA" 
-          className="h-16 md:h-20 w-auto object-contain brightness-0 invert opacity-40 hover:opacity-100 transition-all duration-500 hover:scale-110" 
+          className="h-48 md:h-64 w-auto object-contain transition-all duration-500 hover:scale-105" 
         />
       </div>
     </div>
