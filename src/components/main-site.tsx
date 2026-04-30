@@ -64,7 +64,7 @@ const MISSION_START = new Date("2026-04-30T09:00:00");
 
 const AGENDA_DATA = [
   { date: "04/30/26", time: "9:00 am", activity: "Registration, Team Formation & Breakfast", location: "Howe 409, Bissinger" },
-  { date: "04/30/26", time: "10:00 am", activity: "Event Kickstart, Keynote Speaker Speech", location: "Howe 409, Bissinger" },
+  { date: "04/30/26", time: "10:30 am", activity: "Event Kickstart, Keynote Speaker Speech", location: "Howe 409, Bissinger" },
   { date: "04/30/26", time: "11:30 am", activity: "Hackathon Timer Start", location: "Howe 409, Bissinger" },
   { date: "04/30/26", time: "1:30 pm", activity: "Lunch", location: "Howe 409, Bissinger" },
   { date: "04/30/26", time: "2:30 pm", activity: "Hacking Continues", location: "Howe 409, Bissinger" },
@@ -502,7 +502,16 @@ export const MainSite = () => {
               ].map((item, i) => (
                 <div 
                   key={i} 
-                  onClick={() => setSelectedSection(item.id)}
+                  onClick={() => {
+                    if (item.id === 'briefing') {
+                      window.open('/doc.pdf', '_blank');
+                    } else if (item.id === 'assistance') {
+                       const element = document.getElementById('assistance-form');
+                       if (element) element.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                      setSelectedSection(item.id);
+                    }
+                  }}
                   className="glass-card p-12 rounded-[2.5rem] border-white/5 hover:border-primary/40 transition-all group cursor-pointer flex flex-col items-center text-center hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
                 >
                   <div className={`p-6 rounded-2xl bg-white/5 mb-8 group-hover:bg-primary/10 transition-colors`}>
@@ -516,7 +525,7 @@ export const MainSite = () => {
               ))}
             </div>
 
-            <div className="w-full space-y-12 py-12">
+            <div id="assistance-form" className="w-full space-y-12 py-12">
               <div className="flex flex-col md:flex-row gap-12">
                 <div className="w-full md:w-1/3 glass-card p-8 rounded-[2rem] border-white/5 bg-black/40">
                   <h3 className="text-2xl font-black uppercase tracking-tighter mb-6 text-white flex items-center gap-2">
@@ -598,11 +607,10 @@ export const MainSite = () => {
           </div>
         )}
 
-        <Dialog open={!!selectedSection && selectedSection !== 'assistance'} onOpenChange={() => setSelectedSection(null)}>
+        <Dialog open={!!selectedSection && selectedSection !== 'assistance' && selectedSection !== 'briefing'} onOpenChange={() => setSelectedSection(null)}>
           <DialogContent className="bg-[#0a0a0a] border-white/10 text-white max-w-3xl">
             <DialogHeader>
               <DialogTitle className="text-3xl font-black uppercase tracking-tighter flex items-center gap-3">
-                {selectedSection === 'briefing' && <><FileText className="text-primary" /> Mission Briefing</>}
                 {selectedSection === 'hardware' && <><Terminal className="text-accent" /> Hardware Intelligence</>}
                 {selectedSection === 'vault' && <><Database className="text-primary" /> Intel Vault Access</>}
               </DialogTitle>
@@ -611,17 +619,6 @@ export const MainSite = () => {
               </DialogDescription>
             </DialogHeader>
             <div className="py-8">
-              {selectedSection === 'briefing' && (
-                <div className="space-y-6">
-                  <div className="p-8 rounded-2xl bg-primary/5 border border-primary/20">
-                    <h4 className="text-xl font-black text-primary uppercase mb-4">Target Objective: Topic</h4>
-                    <p className="text-muted-foreground leading-relaxed">
-                      Build a solution that addresses real-world espionage or security challenges using modern tech. 
-                      Specific mission parameters and sub-tracks will be announced at kick-off.
-                    </p>
-                  </div>
-                </div>
-              )}
               {selectedSection === 'hardware' && (
                 <div className="space-y-6">
                   <div className="p-8 rounded-2xl bg-accent/5 border border-accent/20">
