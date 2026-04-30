@@ -624,10 +624,8 @@ export const MainSite = () => {
                   <div className="p-8 rounded-2xl bg-accent/5 border border-accent/20">
                     <h4 className="text-xl font-black text-accent uppercase mb-4">Compute/Hardware Details Allowed</h4>
                     <ul className="space-y-3 text-muted-foreground list-disc pl-4">
+                      <li>15 Available Keys to OpenRouter (Limited Credits)</li>
                       <li>Personal Laptops & Workstations</li>
-                      <li>Standard Microcontrollers (Arduino, ESP32, Raspberry Pi)</li>
-                      <li>Limited Cloud Credit Allocation (AWS/GCP)</li>
-                      <li>Bring your own hardware kits for specific builds</li>
                     </ul>
                   </div>
                 </div>
